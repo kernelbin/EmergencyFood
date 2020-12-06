@@ -231,3 +231,25 @@ CQAPI(const char*) CQ_getAppDirectory(int AuthCode);
 #define CQLOG_WARNING 20        //警告 橙色
 #define CQLOG_ERROR 30          //错误 红色
 #define CQLOG_FATAL 40          //致命错误 深红
+
+
+typedef long long QQID;
+typedef long long GROUPID;
+
+typedef enum __MessageType
+{
+    GROUPMESSAGE,
+    PRIVATEMESSAGE
+}MESSAGE_TYPE;
+
+typedef struct __MessageSource
+{
+    MESSAGE_TYPE MessageType; // 收到消息的途径
+    QQID         SenderID;
+    GROUPID      GroupID;
+
+    // TODO: add information for anonymous message (in group message)
+
+}MESSAGE_SOURCE_STRUCT, *MESSAGE_SOURCE;
+
+

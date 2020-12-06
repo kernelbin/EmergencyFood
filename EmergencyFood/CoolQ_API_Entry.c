@@ -94,7 +94,12 @@ CQEVENT(int, __eventPrivateMsg, 24)(int subType, int msgId, long long fromQQ, co
 
     WCHAR *lpWideStr = StrConvMB2WC(CP_GB18030, msg, -1, NULL);
 
-    HandlePrivateMessage(subType, msgId, fromQQ, lpWideStr, font);
+    MESSAGE_SOURCE_STRUCT MessageSource;
+    MessageSource.MessageType = PRIVATEMESSAGE;
+    MessageSource.GroupID = 0;
+    MessageSource.SenderID = fromQQ;
+
+    OnRecvMessage(msgId, &MessageSource, lpWideStr, font);
 
     free(lpWideStr);
 
@@ -109,7 +114,12 @@ CQEVENT(int, __eventGroupMsg, 36)(int subType, int msgId, long long fromGroup, l
 
     WCHAR *lpWideStr = StrConvMB2WC(CP_GB18030, msg, -1, NULL);
 
-    HandleGroupMessage(subType, msgId, fromGroup, fromQQ, fromAnonymous, lpWideStr, font);
+    MESSAGE_SOURCE_STRUCT MessageSource;
+    MessageSource.MessageType = GROUPMESSAGE;
+    MessageSource.GroupID = fromGroup;
+    MessageSource.SenderID = fromQQ;
+
+    OnRecvMessage(msgId, &MessageSource, lpWideStr, font);
 
     free(lpWideStr);
     

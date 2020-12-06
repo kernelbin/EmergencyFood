@@ -18,6 +18,5 @@ int AppEnabled();
 
 int AppDisabled();
 
-int HandlePrivateMessage(int subType, int msgId, long long fromQQ, const WCHAR *msg, int font);
+int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int font);
 
-int HandleGroupMessage(int subType, int msgId, long long fromGroup, long long fromQQ, const char *fromAnonymous, const WCHAR *msg, int font);

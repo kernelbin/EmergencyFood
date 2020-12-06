@@ -36,6 +36,21 @@ int SendGroupMessage(long long GroupID, const WCHAR * msg)
     return iRet;
 }
 
+int SendBackMessage(MESSAGE_SOURCE MessageSource, LPCWSTR szMsg)
+{
+    switch (MessageSource->MessageType)
+    {
+    case PRIVATEMESSAGE:
+        return SendPrivateMessage(MessageSource->SenderID, szMsg);
+
+    case GROUPMESSAGE:
+        return SendGroupMessage(MessageSource->GroupID, szMsg);
+
+    default:
+        return 0;
+    }
+}
+
 const char * GetGroupMemberInfo(long long GroupID, long long QQID, BOOL NoCache)
 {
     return CQ_getGroupMemberInfoV2(CQAuthCode, GroupID, QQID, NoCache);

@@ -32,21 +32,12 @@ int AppDisabled()//禁用时执行（如果结束时是启用的，会在AppFini
     return 0;
 }
 
-int HandlePrivateMessage(int subType, int msgId, long long fromQQ, const WCHAR * msg, int font)
+int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int font)
 {
-    if (lstrcmpW(msg, L"应急食品") == 0)
+    if (lstrcmpW(szMsg, L"应急食品") == 0)
     {
-        SendPrivateMessage(fromQQ, L"你再叫我应急食品，我就给你起很难听很难听的绰号！！");
+        SendBackMessage(MessageSource, L"我！才！不！是！应！急！食！品！！");
     }
     return 0;
 }
 
-
-int HandleGroupMessage(int subType, int msgId, long long fromGroup, long long fromQQ, const char * fromAnonymous, const WCHAR * msg, int font)
-{
-    if (lstrcmpW(msg, L"应急食品") == 0)
-    {
-        SendGroupMessage(fromGroup, L"我才不是应急食品！！！");
-    }
-    return 0;
-}
