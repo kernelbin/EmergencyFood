@@ -109,7 +109,7 @@ CQEVENT(int, __eventGroupMsg, 36)(int subType, int msgId, long long fromGroup, l
 
     WCHAR *lpWideStr = StrConvMB2WC(CP_GB18030, msg, -1, NULL);
 
-    HandleGroupMessage(subType, msgId, fromGroup, fromQQ, fromAnonymous, msg, font);
+    HandleGroupMessage(subType, msgId, fromGroup, fromQQ, fromAnonymous, lpWideStr, font);
 
     free(lpWideStr);
     

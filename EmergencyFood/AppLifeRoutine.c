@@ -36,7 +36,7 @@ int HandlePrivateMessage(int subType, int msgId, long long fromQQ, const WCHAR *
 {
     if (lstrcmpW(msg, L"应急食品") == 0)
     {
-        SendPrivateMessage(fromQQ, "我才不是应急食品！！！");
+        SendPrivateMessage(fromQQ, L"你再叫我应急食品，我就给你起很难听很难听的绰号！！");
     }
     return 0;
 }
@@ -46,7 +46,7 @@ int HandleGroupMessage(int subType, int msgId, long long fromGroup, long long fr
 {
     if (lstrcmpW(msg, L"应急食品") == 0)
     {
-        SendGroupMessage(fromGroup, "我才不是应急食品！！！");
+        SendGroupMessage(fromGroup, L"我才不是应急食品！！！");
     }
     return 0;
 }

@@ -14,14 +14,26 @@
 
 
 
-int SendPrivateMessage(long long QQID, const char* msg)
+int SendPrivateMessage(long long QQID, const WCHAR * msg)
 {
-    return CQ_sendPrivateMsg(CQAuthCode, QQID, msg);
+    int iRet;
+
+    char* lpMultiByte = StrConvWC2MB(CP_GB18030, msg, -1, NULL);
+    iRet = CQ_sendPrivateMsg(CQAuthCode, QQID, lpMultiByte);
+    free(lpMultiByte);
+
+    return iRet;
 }
 
-int SendGroupMessage(long long GroupID, const char* msg)
+int SendGroupMessage(long long GroupID, const WCHAR * msg)
 {
-    return CQ_sendGroupMsg(CQAuthCode, GroupID, msg);
+    int iRet;
+
+    char *lpMultiByte = StrConvWC2MB(CP_GB18030, msg, -1, NULL);
+    return CQ_sendGroupMsg(CQAuthCode, GroupID, lpMultiByte);
+    free(lpMultiByte);
+
+    return iRet;
 }
 
 const char * GetGroupMemberInfo(long long GroupID, long long QQID, BOOL NoCache)

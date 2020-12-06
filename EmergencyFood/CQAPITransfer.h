@@ -13,9 +13,9 @@
 #include "CoolQDef.h"
 #include "CoolQ_State.h"
 
-int SendPrivateMessage(long long QQID, const char* msg);
+int SendPrivateMessage(long long QQID, const WCHAR * msg);
 
-int SendGroupMessage(long long GroupID, const char* msg);
+int SendGroupMessage(long long GroupID, const WCHAR * msg);
 
 const char* GetGroupMemberInfo(long long GroupID, long long QQID, BOOL NoCache);
 
