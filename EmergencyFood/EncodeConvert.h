@@ -5,7 +5,9 @@
  */
 
 
-#include<Windows.h>
+#pragma once
+
+#include <Windows.h>
 
 #define CP_GB18030 54936
 

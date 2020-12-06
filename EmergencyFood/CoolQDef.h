@@ -5,6 +5,8 @@
  */
 
 
+#pragma once
+
 #define CQAPIVER 9
 #define CQAPIVERTEXT "9"
 
