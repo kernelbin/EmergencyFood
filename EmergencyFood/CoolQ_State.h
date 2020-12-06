@@ -1,0 +1,11 @@
+/*
+ * PROJECT:     EmergencyFood Project
+ * PURPOSE:     Storing states about CoolQ
+ * COPYRIGHT:   Copyright 2020 kernel.bin (1160386205@qq.com)
+ */
+
+
+#include<Windows.h>
+
+int CQAuthCode;
+int CQEnabled;
