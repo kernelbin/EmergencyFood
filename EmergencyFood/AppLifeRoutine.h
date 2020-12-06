@@ -1,4 +1,4 @@
-/*
+﻿/*
  * PROJECT:     EmergencyFood Project
  * PURPOSE:     Declaring functions in AppLifeRoutine.c
  * COPYRIGHT:   Copyright 2020 kernel.bin (1160386205@qq.com)

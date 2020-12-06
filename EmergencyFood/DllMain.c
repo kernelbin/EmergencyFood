@@ -1,4 +1,4 @@
-/*
+﻿/*
  * PROJECT:     EmergencyFood Project
  * PURPOSE:     DLL main entry
  * COPYRIGHT:   Copyright 2020 kernel.bin (1160386205@qq.com)

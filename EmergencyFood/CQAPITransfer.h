@@ -1,4 +1,4 @@
-/*
+﻿/*
  * PROJECT:     EmergencyFood Project
  * PURPOSE:     Translate CoolQ API call
  * COPYRIGHT:   Copyright 2020 kernel.bin (1160386205@qq.com)

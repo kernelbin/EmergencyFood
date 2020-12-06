@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * PROJECT:     Encode Converter
  * PURPOSE:     Converting string encode using API
  * COPYRIGHT:   Copyright 2020 kernel.bin (1160386205@qq.com)
@@ -8,7 +8,7 @@
 #include"EncodeConvert.h"
 
 
-WCHAR * StrConvMB2WC(UINT CodePage,LPCCH MbStr,int cbMbStrlen, int *cchWcLen) //×ª»»×Ö·û´®²¢Ä¬ÈÏ²¹Ò»¸ö \0ÔÚ½áÎ²¡£³¤¶È´«Èë-1Ôò×Ô¶¯¼ÆËã³¤¶È£¬ÄÚ´æĞèÒªÊÖ¶¯free
+WCHAR * StrConvMB2WC(UINT CodePage,LPCCH MbStr,int cbMbStrlen, int *cchWcLen) //è½¬æ¢å­—ç¬¦ä¸²å¹¶é»˜è®¤è¡¥ä¸€ä¸ª \0åœ¨ç»“å°¾ã€‚é•¿åº¦ä¼ å…¥-1åˆ™è‡ªåŠ¨è®¡ç®—é•¿åº¦ï¼Œå†…å­˜éœ€è¦æ‰‹åŠ¨free
 {
     if (cbMbStrlen == -1)
     {
@@ -35,7 +35,7 @@ WCHAR * StrConvMB2WC(UINT CodePage,LPCCH MbStr,int cbMbStrlen, int *cchWcLen) //
 }
 
 
-char* StrConvWC2MB(UINT CodePage, LPCWCH WcStr, int cchWcStrlen, int* cbMbLen) //×ª»»×Ö·û´®²¢Ä¬ÈÏ²¹Ò»¸ö \0ÔÚ½áÎ²¡£³¤¶È´«Èë-1Ôò×Ô¶¯¼ÆËã³¤¶È£¬ÄÚ´æĞèÒªÊÖ¶¯free
+char* StrConvWC2MB(UINT CodePage, LPCWCH WcStr, int cchWcStrlen, int* cbMbLen) //è½¬æ¢å­—ç¬¦ä¸²å¹¶é»˜è®¤è¡¥ä¸€ä¸ª \0åœ¨ç»“å°¾ã€‚é•¿åº¦ä¼ å…¥-1åˆ™è‡ªåŠ¨è®¡ç®—é•¿åº¦ï¼Œå†…å­˜éœ€è¦æ‰‹åŠ¨free
 {
     if (cchWcStrlen == -1)
     {
