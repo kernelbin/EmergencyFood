@@ -150,11 +150,14 @@
     <ClCompile Include="CoolQ_API_Entry.c" />
     <ClCompile Include="CQAPITransfer.c" />
     <ClCompile Include="DllMain.c" />
+    <ClCompile Include="EncodeConvert.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppLifeRoutine.h" />
     <ClInclude Include="CoolQDef.h" />
     <ClInclude Include="CoolQ_State.h" />
     <ClInclude Include="CQAPITransfer.h" />
+    <ClInclude Include="EncodeConvert.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.json" />

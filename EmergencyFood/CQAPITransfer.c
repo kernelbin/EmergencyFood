@@ -10,29 +10,31 @@
 #include "CoolQDef.h"
 #include "CoolQ_State.h"
 #include "CQAPITransfer.h"
+#include "EncodeConvert.h"
+
 
 
 int SendPrivateMessage(long long QQID, const char* msg)
 {
-	return CQ_sendPrivateMsg(CQAuthCode, QQID, msg);
+    return CQ_sendPrivateMsg(CQAuthCode, QQID, msg);
 }
 
 int SendGroupMessage(long long GroupID, const char* msg)
 {
-	return CQ_sendGroupMsg(CQAuthCode, GroupID, msg);
+    return CQ_sendGroupMsg(CQAuthCode, GroupID, msg);
 }
 
 const char * GetGroupMemberInfo(long long GroupID, long long QQID, BOOL NoCache)
 {
-	return CQ_getGroupMemberInfoV2(CQAuthCode, GroupID, QQID, NoCache);
+    return CQ_getGroupMemberInfoV2(CQAuthCode, GroupID, QQID, NoCache);
 }
 
 const char* GetStrangerInfo(long long QQID, BOOL NoCache)
 {
-	return CQ_getStrangerInfo(CQAuthCode, QQID, NoCache);
+    return CQ_getStrangerInfo(CQAuthCode, QQID, NoCache);
 }
 
 const char* GetAppDirectory()
 {
-	return CQ_getAppDirectory(CQAuthCode);
+    return CQ_getAppDirectory(CQAuthCode);
 }

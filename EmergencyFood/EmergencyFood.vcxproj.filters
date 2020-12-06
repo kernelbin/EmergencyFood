@@ -35,6 +35,9 @@
     <ClCompile Include="CQAPITransfer.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="EncodeConvert.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoolQ_State.h">
@@ -44,6 +47,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CoolQDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EncodeConvert.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AppLifeRoutine.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
