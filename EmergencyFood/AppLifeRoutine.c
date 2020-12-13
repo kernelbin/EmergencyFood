@@ -6,8 +6,10 @@
 
 
 #include <Windows.h>
+#include <wchar.h>
 #include "CQAPITransfer.h"
 #include "AppLifeRoutine.h"
+#include "GenshinGetGameRecord.h"
 
 //生命周期
 
@@ -38,6 +40,34 @@ int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int fo
     {
         SendBackMessage(MessageSource, L"我！才！不！是！应！急！食！品！！");
     }
+    else
+    {
+        long long UID;
+        if (swscanf_s(szMsg, L"原神查询%lld", &UID) == 1)
+        {
+            if (UID >= 1000000000 || UID < 100000000)
+            {
+                SendBackMessage(MessageSource, L"UID长度错误，请检查输入的UID是否正确");
+            }
+            else
+            {
+                WCHAR szUID[10];
+                swprintf(szUID, _countof(szUID), L"%lld", UID);
+                USER_GAME_RECORD_RESULT GameRecordResult;
+                BOOL bSuccess = GenshinGetUserGameRecord(szUID, &GameRecordResult);
+
+                if (bSuccess)
+                {
+                    SendBackMessage(MessageSource, L"查询成功");
+                }
+                else
+                {
+                    SendBackMessage(MessageSource, L"查询失败QAQ");
+                }
+            }
+        }
+    }
+    
     return 0;
 }
 

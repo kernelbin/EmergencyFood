@@ -16,6 +16,24 @@
     <Filter Include="源文件\CoolQ Lib">
       <UniqueIdentifier>{9e3ffb92-d0f9-4fb8-9238-015b30d0a128}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\GenshinImpactAPI">
+      <UniqueIdentifier>{7d060460-fbc9-4ad3-ba58-ecc9dc8a26d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GenshinImpactAPI">
+      <UniqueIdentifier>{aed94a85-bcf7-413a-8cb3-b169a025a389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\MD5">
+      <UniqueIdentifier>{cf52c8fa-5b26-49d7-928f-25535102db55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\MD5">
+      <UniqueIdentifier>{3bbc3af3-7359-4618-86fc-bf01e07c34cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\yyjson">
+      <UniqueIdentifier>{e17ae0e1-666c-424c-b360-7db0dcae7baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\yyjson">
+      <UniqueIdentifier>{f6b872a1-957f-481b-a827-2c18094f2105}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Library Include="CQP.lib">
@@ -38,6 +56,15 @@
     <ClCompile Include="EncodeConvert.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="md5.c">
+      <Filter>源文件\MD5</Filter>
+    </ClCompile>
+    <ClCompile Include="yyjson.c">
+      <Filter>源文件\yyjson</Filter>
+    </ClCompile>
+    <ClCompile Include="GenshinGetGameRecord.cpp">
+      <Filter>源文件\GenshinImpactAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoolQ_State.h">
@@ -54,6 +81,15 @@
     </ClInclude>
     <ClInclude Include="AppLifeRoutine.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="md5.h">
+      <Filter>头文件\MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="yyjson.h">
+      <Filter>头文件\yyjson</Filter>
+    </ClInclude>
+    <ClInclude Include="GenshinGetGameRecord.h">
+      <Filter>头文件\GenshinImpactAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
