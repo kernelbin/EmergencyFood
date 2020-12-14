@@ -10,12 +10,12 @@
 #include "CQAPITransfer.h"
 #include "AppLifeRoutine.h"
 #include "GenshinGetGameRecord.h"
+#include "GenshinTextualization.h"
 
 //生命周期
 
 int AppInitialize()//初始化时会被执行
 {
-    
     return 0;
 }
 
@@ -58,11 +58,37 @@ int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int fo
 
                 if (bSuccess)
                 {
-                    SendBackMessage(MessageSource, L"查询成功");
+                    switch (GameRecordResult.RetCode)
+                    {
+                    case 0:
+                    {
+                        WCHAR *String = GetTextualizedAvatarInfo(GameRecordResult.AvatarData, GameRecordResult.AvatarCount);
+                        SendBackMessage(MessageSource, String);
+                        ReleaseTextualizedAvatarInfo(String);
+                        break;
+                    }
+                    case 10101:
+                    {
+                        // TODO: change another cookie and retry
+                        SendBackMessage(MessageSource, L"派蒙...派蒙饿了！cookies被吃光了！");
+                        break;
+                    }
+                    case 10102:
+                    {
+                        SendBackMessage(MessageSource, L"派蒙什么也没有查到！在米游社里打开原神数据公开，派蒙才能查呢！");
+                        break;
+                    }
+                    default:
+                    {
+                        SendBackMessage(MessageSource, L"好像哪里出了什么错呢！派蒙也不知道出了什么问题！");
+                        break;
+                    }
+                    }
+                    
                 }
                 else
                 {
-                    SendBackMessage(MessageSource, L"查询失败QAQ");
+                    SendBackMessage(MessageSource, L"查询失败了！额，派蒙也不知道为什么（思考）");
                 }
             }
         }

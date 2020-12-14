@@ -11,6 +11,7 @@
 #include <atlcoll.h>
 #include <cstdlib>
 #include "GenshinGetGameRecord.h"
+#include "GenshinBasic.h"
 #include "md5.h"
 #include "yyjson.h"
 
@@ -62,7 +63,43 @@ BOOL DSGet(ATL::CStringW &DS)
     return TRUE;
 }
 
-BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, USER_GAME_RECORD_RESULT * Result)
+BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, USER_GAME_RECORD_RESULT *Result)
+{
+    if (!nodeAvatars)
+    {
+        return FALSE;
+    }
+
+    int iAvatarCount = yyjson_arr_size(nodeAvatars);
+    if (iAvatarCount > _countof(Result->AvatarData))
+    {
+        // something wrong. possibly array too small.
+        return FALSE;
+    }
+    Result->AvatarCount = iAvatarCount;
+
+    yyjson_val *AvatarEnum =  yyjson_arr_get_first(nodeAvatars);
+
+    for (int iAvatarIndex = 0; iAvatarIndex < iAvatarCount; iAvatarIndex++)
+    {
+        yyjson_val *nodeID = yyjson_obj_get(AvatarEnum, "id");
+        yyjson_val *nodeElement = yyjson_obj_get(AvatarEnum, "element");
+        yyjson_val *nodeFetter = yyjson_obj_get(AvatarEnum, "fetter");
+        yyjson_val *nodeLevel = yyjson_obj_get(AvatarEnum, "level");
+
+        Result->AvatarData[iAvatarIndex].AvatarID = yyjson_get_int(nodeID);
+        Result->AvatarData[iAvatarIndex].Element = ElementTextToEnum(yyjson_get_str(nodeElement));
+        Result->AvatarData[iAvatarIndex].Fetter = yyjson_get_int(nodeFetter);
+        Result->AvatarData[iAvatarIndex].Level = yyjson_get_int(nodeLevel);
+
+
+        AvatarEnum = unsafe_yyjson_get_next(AvatarEnum);
+    }
+
+    return TRUE;
+}
+
+BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, USER_GAME_RECORD_RESULT *Result)
 {
     yyjson_doc *nodeJsonDoc = yyjson_read(lpJsonData, JsonDataLength, 0);
     if (!nodeJsonDoc)
@@ -109,7 +146,7 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, USER_GAME
 
     if (nodeAvatars)
     {
-        // TODO: analysis
+        AvatarJsonAnalysis(nodeAvatars, Result);
     }
 
     if (nodeStats)

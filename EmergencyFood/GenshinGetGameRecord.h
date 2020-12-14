@@ -7,11 +7,24 @@
 
 #pragma once
 
-#include<Windows.h>
+#include <Windows.h>
+#include "GenshinBasic.h"
+
+typedef struct
+{
+    int AvatarID;
+    GENSHIN_ELEMENT Element;
+    int Fetter;
+    int Level;
+    
+}AVATAR_DATA;
 
 typedef struct
 {
     int RetCode;
+
+    int AvatarCount;
+    AVATAR_DATA AvatarData[32]; // 32 is already more that the number of characters for now
 
 }USER_GAME_RECORD_RESULT;
 
