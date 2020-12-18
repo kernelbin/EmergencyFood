@@ -20,7 +20,7 @@
 
 WCHAR miHoYoServer[] = L"api-takumi.mihoyo.com";
 
-BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, USER_GAME_RECORD_RESULT *Result)
+BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT *Result)
 {
     if (!nodeAvatars)
     {
@@ -56,7 +56,7 @@ BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, USER_GAME_RECORD_RESULT *Result
     return TRUE;
 }
 
-BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, USER_GAME_RECORD_RESULT *Result)
+BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_USER_GAME_RECORD_RESULT *Result)
 {
     yyjson_doc *nodeJsonDoc = yyjson_read(lpJsonData, JsonDataLength, 0);
     if (!nodeJsonDoc)
@@ -88,7 +88,7 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, USER_GAME
         return FALSE;
     }
 
-    memset(Result, 0, sizeof(USER_GAME_RECORD_RESULT));
+    memset(Result, 0, sizeof(GENSHIN_USER_GAME_RECORD_RESULT));
 
     Result->RetCode = yyjson_get_int(nodeRetCode);
     if (Result->RetCode != 0)
@@ -120,7 +120,7 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, USER_GAME
     return TRUE;
 }
 
-extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], USER_GAME_RECORD_RESULT * Result)
+extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT * Result)
 {
     if (!UID)
     {

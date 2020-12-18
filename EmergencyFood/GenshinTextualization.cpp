@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include "GenshinGetGameRecord.h"
 
-extern "C" WCHAR *GetTextualizedAvatarInfo(AVATAR_DATA * AvatarData, int AvatarCount)
+extern "C" WCHAR *GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA * AvatarData, int AvatarCount)
 {
     ATL::CStringW Result;
     

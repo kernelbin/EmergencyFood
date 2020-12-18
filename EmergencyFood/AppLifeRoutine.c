@@ -53,7 +53,7 @@ int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int fo
             {
                 WCHAR szUID[10];
                 swprintf(szUID, _countof(szUID), L"%lld", UID);
-                USER_GAME_RECORD_RESULT GameRecordResult;
+                GENSHIN_USER_GAME_RECORD_RESULT GameRecordResult;
                 BOOL bSuccess = GenshinGetUserGameRecord(szUID, &GameRecordResult);
 
                 if (bSuccess)

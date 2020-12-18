@@ -9,6 +9,6 @@
 #include <Windows.h>
 #include "GenshinGetGameRecord.h"
 
-WCHAR *GetTextualizedAvatarInfo(AVATAR_DATA *AvatarData, int AvatarCount);
+WCHAR *GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA *AvatarData, int AvatarCount);
 void ReleaseTextualizedAvatarInfo(WCHAR *String);
 

@@ -17,20 +17,20 @@ typedef struct
     int Fetter;
     int Level;
     
-}AVATAR_DATA;
+}GENSHIN_AVATAR_DATA;
 
 typedef struct
 {
     int RetCode;
 
     int AvatarCount;
-    AVATAR_DATA AvatarData[32]; // 32 is already more that the number of characters for now
+    GENSHIN_AVATAR_DATA AvatarData[32]; // 32 is already more that the number of characters for now
 
-}USER_GAME_RECORD_RESULT;
+}GENSHIN_USER_GAME_RECORD_RESULT;
 
 #ifdef __cplusplus
-extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], USER_GAME_RECORD_RESULT * Result);
+extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT * Result);
 #else
-BOOL GenshinGetUserGameRecord(const WCHAR UID[], USER_GAME_RECORD_RESULT *Result);
+BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT *Result);
 #endif
 
