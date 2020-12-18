@@ -151,6 +151,8 @@
     <ClCompile Include="CQAPITransfer.c" />
     <ClCompile Include="DllMain.c" />
     <ClCompile Include="EncodeConvert.c" />
+    <ClCompile Include="GenshinAPIBase.cpp" />
+    <ClCompile Include="GenshinAPIBase.h" />
     <ClCompile Include="GenshinBasic.c" />
     <ClCompile Include="GenshinGetGameRecord.cpp" />
     <ClCompile Include="GenshinTextualization.cpp" />
