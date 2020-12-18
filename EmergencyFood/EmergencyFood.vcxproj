@@ -152,7 +152,6 @@
     <ClCompile Include="DllMain.c" />
     <ClCompile Include="EncodeConvert.c" />
     <ClCompile Include="GenshinAPIBase.cpp" />
-    <ClCompile Include="GenshinAPIBase.h" />
     <ClCompile Include="GenshinBasic.c" />
     <ClCompile Include="GenshinGetGameRecord.cpp" />
     <ClCompile Include="GenshinTextualization.cpp" />
@@ -165,6 +164,7 @@
     <ClInclude Include="CoolQ_State.h" />
     <ClInclude Include="CQAPITransfer.h" />
     <ClInclude Include="EncodeConvert.h" />
+    <ClInclude Include="GenshinAPIBase.h" />
     <ClInclude Include="GenshinBasic.h" />
     <ClInclude Include="GenshinGetGameRecord.h" />
     <ClInclude Include="GenshinTextualization.h" />

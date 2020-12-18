@@ -71,9 +71,6 @@
     <ClCompile Include="GenshinTextualization.cpp">
       <Filter>源文件\GenshinImpactAPI</Filter>
     </ClCompile>
-    <ClCompile Include="GenshinAPIBase.h">
-      <Filter>头文件\GenshinImpactAPI</Filter>
-    </ClCompile>
     <ClCompile Include="GenshinAPIBase.cpp">
       <Filter>源文件\GenshinImpactAPI</Filter>
     </ClCompile>
@@ -107,6 +104,9 @@
       <Filter>头文件\GenshinImpactAPI</Filter>
     </ClInclude>
     <ClInclude Include="GenshinTextualization.h">
+      <Filter>头文件\GenshinImpactAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="GenshinAPIBase.h">
       <Filter>头文件\GenshinImpactAPI</Filter>
     </ClInclude>
   </ItemGroup>
