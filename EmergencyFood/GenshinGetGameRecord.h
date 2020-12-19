@@ -21,10 +21,31 @@ typedef struct
 
 typedef struct
 {
+    int ActiveDayNumber;
+    int AchievementNumber;
+    // in the json returned from API, there's a field called ```win_rate``` here
+    // but I have no idea what it's for.
+    int AnemoculusNumber;
+    int GeoculusNumber;
+    int AvatarNumber;
+    int WayPointNumber;
+    int DomainNumber;
+    WCHAR SpiralAbyss[32];
+    int PreciousChestNumber;
+    int LuxuriousChestNumber;
+    int ExquistieChestNumber;
+    int CommonChestNumber;
+
+}GENSHIN_STATS_DATA;
+
+typedef struct
+{
     int RetCode;
 
     int AvatarCount;
     GENSHIN_AVATAR_DATA AvatarData[32]; // 32 is already more that the number of characters for now
+
+    GENSHIN_STATS_DATA StatsData;
 
 }GENSHIN_USER_GAME_RECORD_RESULT;
 

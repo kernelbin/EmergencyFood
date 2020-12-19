@@ -56,6 +56,43 @@ BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT
     return TRUE;
 }
 
+BOOL StatsJsonAnalysis(yyjson_val *nodeStats, GENSHIN_USER_GAME_RECORD_RESULT *Result)
+{
+    if (!nodeStats)
+    {
+        return FALSE;
+    }
+
+    yyjson_val *nodeActiveDayNumber = yyjson_obj_get(nodeStats, "active_day_number");
+    yyjson_val *nodeAchievementNumber = yyjson_obj_get(nodeStats, "achievement_number");
+    yyjson_val *nodeAnemoculusNumber = yyjson_obj_get(nodeStats, "anemoculus_number");
+    yyjson_val *nodeGeoculusNumber = yyjson_obj_get(nodeStats, "geoculus_number");
+    yyjson_val *nodeAvatarNumber = yyjson_obj_get(nodeStats, "avatar_number");
+    yyjson_val *nodeWayPointNumber = yyjson_obj_get(nodeStats, "way_point_number");
+    yyjson_val *nodeDomainNumber = yyjson_obj_get(nodeStats, "domain_number");
+    yyjson_val *nodeSpiralAbyss = yyjson_obj_get(nodeStats, "spiral_abyss");
+    yyjson_val *nodePreciousChestNumber = yyjson_obj_get(nodeStats, "precious_chest_number");
+    yyjson_val *nodeLuxuriousChestNumber = yyjson_obj_get(nodeStats, "luxurious_chest_number");
+    yyjson_val *nodeExquistieChestNumber = yyjson_obj_get(nodeStats, "exquisite_chest_number");
+    yyjson_val *nodeCommonChestNumber = yyjson_obj_get(nodeStats, "common_chest_number");
+
+
+    Result->StatsData.ActiveDayNumber = yyjson_get_int(nodeActiveDayNumber);
+    Result->StatsData.AchievementNumber = yyjson_get_int(nodeAchievementNumber);
+    Result->StatsData.AnemoculusNumber = yyjson_get_int(nodeAnemoculusNumber);
+    Result->StatsData.GeoculusNumber = yyjson_get_int(nodeGeoculusNumber);
+    Result->StatsData.AvatarNumber = yyjson_get_int(nodeAvatarNumber);
+    Result->StatsData.WayPointNumber = yyjson_get_int(nodeWayPointNumber);
+    Result->StatsData.DomainNumber = yyjson_get_int(nodeDomainNumber);
+    MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeSpiralAbyss), -1, Result->StatsData.SpiralAbyss, _countof(Result->StatsData.SpiralAbyss));
+    Result->StatsData.PreciousChestNumber = yyjson_get_int(nodePreciousChestNumber);
+    Result->StatsData.LuxuriousChestNumber = yyjson_get_int(nodeLuxuriousChestNumber);
+    Result->StatsData.LuxuriousChestNumber = yyjson_get_int(nodeExquistieChestNumber);
+    Result->StatsData.CommonChestNumber = yyjson_get_int(nodeCommonChestNumber);
+
+    return TRUE;
+}
+
 BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_USER_GAME_RECORD_RESULT *Result)
 {
     yyjson_doc *nodeJsonDoc = yyjson_read(lpJsonData, JsonDataLength, 0);
