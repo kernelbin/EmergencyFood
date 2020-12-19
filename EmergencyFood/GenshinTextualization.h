@@ -11,4 +11,5 @@
 
 WCHAR *GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA *AvatarData, int AvatarCount);
 void ReleaseTextualizedAvatarInfo(WCHAR *String);
-
+WCHAR *GetTextualizedStatsInfo(GENSHIN_STATS_DATA *StatsData);
+void ReleaseTextualizedStatsInfo(WCHAR *String);

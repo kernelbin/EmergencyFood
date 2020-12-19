@@ -87,7 +87,7 @@ BOOL StatsJsonAnalysis(yyjson_val *nodeStats, GENSHIN_USER_GAME_RECORD_RESULT *R
     MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeSpiralAbyss), -1, Result->StatsData.SpiralAbyss, _countof(Result->StatsData.SpiralAbyss));
     Result->StatsData.PreciousChestNumber = yyjson_get_int(nodePreciousChestNumber);
     Result->StatsData.LuxuriousChestNumber = yyjson_get_int(nodeLuxuriousChestNumber);
-    Result->StatsData.LuxuriousChestNumber = yyjson_get_int(nodeExquistieChestNumber);
+    Result->StatsData.ExquistieChestNumber = yyjson_get_int(nodeExquistieChestNumber);
     Result->StatsData.CommonChestNumber = yyjson_get_int(nodeCommonChestNumber);
 
     return TRUE;
@@ -145,7 +145,7 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
 
     if (nodeStats)
     {
-        // TODO: analysis
+        StatsJsonAnalysis(nodeStats, Result);
     }
 
     if (nodeCityExplorations)

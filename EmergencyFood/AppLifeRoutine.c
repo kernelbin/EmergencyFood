@@ -62,9 +62,19 @@ int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int fo
                     {
                     case 0:
                     {
-                        WCHAR *String = GetTextualizedAvatarInfo(GameRecordResult.AvatarData, GameRecordResult.AvatarCount);
-                        SendBackMessage(MessageSource, String);
-                        ReleaseTextualizedAvatarInfo(String);
+                        if (wcsstr(szMsg, L"统计"))
+                        {
+                            WCHAR *String = GetTextualizedStatsInfo(&(GameRecordResult.StatsData));
+                            SendBackMessage(MessageSource, String);
+                            ReleaseTextualizedStatsInfo(String);
+                        }
+                        else
+                        {
+                            WCHAR *String = GetTextualizedAvatarInfo(GameRecordResult.AvatarData, GameRecordResult.AvatarCount);
+                            SendBackMessage(MessageSource, String);
+                            ReleaseTextualizedAvatarInfo(String);
+                        }
+                        
                         break;
                     }
                     case 10101:
