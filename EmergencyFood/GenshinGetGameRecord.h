@@ -8,18 +8,27 @@
 #pragma once
 
 #include <Windows.h>
+#include <atlcoll.h>
 #include "GenshinBasic.h"
 
-typedef struct
+typedef struct __GENSHIN_AVATAR_DATA
 {
     int AvatarID;
     GENSHIN_ELEMENT Element;
     int Fetter;
     int Level;
+
+    __GENSHIN_AVATAR_DATA()
+    {
+        AvatarID = 0;
+        Element = ELEMENT_NONE;
+        Fetter = 0;
+        Level = 0;
+    }
     
 }GENSHIN_AVATAR_DATA;
 
-typedef struct
+typedef struct __GENSHIN_STATS_DATA
 {
     int ActiveDayNumber;
     int AchievementNumber;
@@ -36,16 +45,36 @@ typedef struct
     int ExquistieChestNumber;
     int CommonChestNumber;
 
+    __GENSHIN_STATS_DATA()
+    {
+        ActiveDayNumber = 0;
+        AchievementNumber = 0;
+        AnemoculusNumber = 0;
+        GeoculusNumber = 0;
+        AvatarNumber = 0;
+        WayPointNumber = 0;
+        DomainNumber = 0;
+        wcscpy_s(SpiralAbyss, _countof(SpiralAbyss), L"");
+        PreciousChestNumber = 0;
+        LuxuriousChestNumber = 0;
+        ExquistieChestNumber = 0;
+        CommonChestNumber = 0;
+    }
+
 }GENSHIN_STATS_DATA;
 
-typedef struct
+typedef struct __GENSHIN_USER_GAME_RECORD_RESULT
 {
     int RetCode;
 
-    int AvatarCount;
-    GENSHIN_AVATAR_DATA AvatarData[32]; // 32 is already more that the number of characters for now
+    ATL::CAtlArray<GENSHIN_AVATAR_DATA> AvatarData;
 
     GENSHIN_STATS_DATA StatsData;
+
+    __GENSHIN_USER_GAME_RECORD_RESULT()
+    {
+        RetCode = -1;
+    }
 
 }GENSHIN_USER_GAME_RECORD_RESULT;
 

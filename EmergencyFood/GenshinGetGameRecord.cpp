@@ -28,14 +28,10 @@ BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT
     }
 
     int iAvatarCount = yyjson_arr_size(nodeAvatars);
-    if (iAvatarCount > _countof(Result->AvatarData))
-    {
-        // something wrong. possibly array too small.
-        return FALSE;
-    }
-    Result->AvatarCount = iAvatarCount;
 
     yyjson_val *AvatarEnum =  yyjson_arr_get_first(nodeAvatars);
+
+    Result->AvatarData.SetCount(iAvatarCount);
 
     for (int iAvatarIndex = 0; iAvatarIndex < iAvatarCount; iAvatarIndex++)
     {
@@ -48,7 +44,6 @@ BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT
         Result->AvatarData[iAvatarIndex].Element = ElementTextToEnum(yyjson_get_str(nodeElement));
         Result->AvatarData[iAvatarIndex].Fetter = yyjson_get_int(nodeFetter);
         Result->AvatarData[iAvatarIndex].Level = yyjson_get_int(nodeLevel);
-
 
         AvatarEnum = unsafe_yyjson_get_next(AvatarEnum);
     }
@@ -124,8 +119,6 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
         yyjson_doc_free(nodeJsonDoc);
         return FALSE;
     }
-
-    memset(Result, 0, sizeof(GENSHIN_USER_GAME_RECORD_RESULT));
 
     Result->RetCode = yyjson_get_int(nodeRetCode);
     if (Result->RetCode != 0)

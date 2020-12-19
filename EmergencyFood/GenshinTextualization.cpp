@@ -10,10 +10,10 @@
 #include "GenshinGetGameRecord.h"
 #include "GenshinTextualization.h"
 
-BOOL GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA * AvatarData, int AvatarCount, ATL::CStringW &Result)
+BOOL GetTextualizedAvatarInfo(ATL::CAtlArray<GENSHIN_AVATAR_DATA> &AvatarData, ATL::CStringW &Result)
 {
     Result = L"派蒙查到了！";
-    for (int i = 0; i < AvatarCount; i++)
+    for (unsigned int i = 0; i < AvatarData.GetCount(); i++)
     {
         const WCHAR *AvatarName = GetAvatarNameByID(AvatarData[i].AvatarID);
         if (AvatarName)
@@ -21,7 +21,7 @@ BOOL GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA * AvatarData, int AvatarCount,
             ATL::CStringW Buffer;
             Buffer.Format(L"%ls：%d级，好感度%d", AvatarName, AvatarData[i].Level, AvatarData[i].Fetter);
             Result.Append(Buffer);
-            if (i != AvatarCount - 1)
+            if (i != AvatarData.GetCount() - 1)
             {
                 Result.Append(L" | ");
             }
@@ -31,7 +31,7 @@ BOOL GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA * AvatarData, int AvatarCount,
     return TRUE;
 }
 
-BOOL GetTextualizedStatsInfo(GENSHIN_STATS_DATA * StatsData, ATL::CStringW &Result)
+BOOL GetTextualizedStatsInfo(GENSHIN_STATS_DATA &StatsData, ATL::CStringW &Result)
 {
     Result.Format(L"派蒙查到了！"
     L"活跃天数：%d  "
@@ -39,14 +39,14 @@ BOOL GetTextualizedStatsInfo(GENSHIN_STATS_DATA * StatsData, ATL::CStringW &Resu
     L"获得角色数：%d  "
     L"深境螺旋：%ls  "
     L"华丽/珍贵/精致/普通宝箱：%d/%d/%d/%d",
-        StatsData->ActiveDayNumber,
-        StatsData->AchievementNumber,
-        StatsData->AvatarNumber,
-        StatsData->SpiralAbyss,
-        StatsData->LuxuriousChestNumber,
-        StatsData->PreciousChestNumber,
-        StatsData->ExquistieChestNumber,
-        StatsData->CommonChestNumber);
+        StatsData.ActiveDayNumber,
+        StatsData.AchievementNumber,
+        StatsData.AvatarNumber,
+        StatsData.SpiralAbyss,
+        StatsData.LuxuriousChestNumber,
+        StatsData.PreciousChestNumber,
+        StatsData.ExquistieChestNumber,
+        StatsData.CommonChestNumber);
 
     return TRUE;
 }
