@@ -146,7 +146,7 @@
     <Library Include="CQP.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AppLifeRoutine.c" />
+    <ClCompile Include="AppLifeRoutine.cpp" />
     <ClCompile Include="CoolQ_API_Entry.c" />
     <ClCompile Include="CQAPITransfer.c" />
     <ClCompile Include="DllMain.c" />

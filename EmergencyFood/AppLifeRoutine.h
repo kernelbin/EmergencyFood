@@ -10,6 +10,10 @@
 #include <Windows.h>
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int AppInitialize();
 
 int AppFinialize();
@@ -20,3 +24,6 @@ int AppDisabled();
 
 int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int font);
 
+#ifdef __cplusplus
+}
+#endif

@@ -44,9 +44,6 @@
     <ClCompile Include="DllMain.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AppLifeRoutine.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="CoolQ_API_Entry.c">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="GenshinAPIBase.cpp">
       <Filter>源文件\GenshinImpactAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="AppLifeRoutine.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

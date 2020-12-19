@@ -14,27 +14,27 @@
 
 //生命周期
 
-int AppInitialize()//初始化时会被执行
+extern "C" int AppInitialize()//初始化时会被执行
 {
     return 0;
 }
 
-int AppFinialize()//结束时会被执行
+extern "C" int AppFinialize()//结束时会被执行
 {
     return 0;
 }
 
-int AppEnabled()//启用时执行（如果初始化时是启用的，会在AppInitialize后执行一次）
+extern "C" int AppEnabled()//启用时执行（如果初始化时是启用的，会在AppInitialize后执行一次）
 {
     return 0;
 }
 
-int AppDisabled()//禁用时执行（如果结束时是启用的，会在AppFinialize前执行一次，这点和cq原生函数不一样）
+extern "C" int AppDisabled()//禁用时执行（如果结束时是启用的，会在AppFinialize前执行一次，这点和cq原生函数不一样）
 {
     return 0;
 }
 
-int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int font)
+extern "C" int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR szMsg, int font)
 {
     if (lstrcmpW(szMsg, L"应急食品") == 0)
     {
