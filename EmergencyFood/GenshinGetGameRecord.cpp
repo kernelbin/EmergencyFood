@@ -20,7 +20,7 @@
 
 WCHAR miHoYoServer[] = L"api-takumi.mihoyo.com";
 
-BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT *Result)
+BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, ATL::CAtlArray<GENSHIN_AVATAR_DATA> &AvatarData)
 {
     if (!nodeAvatars)
     {
@@ -31,7 +31,7 @@ BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT
 
     yyjson_val *AvatarEnum =  yyjson_arr_get_first(nodeAvatars);
 
-    Result->AvatarData.SetCount(iAvatarCount);
+    AvatarData.SetCount(iAvatarCount);
 
     for (int iAvatarIndex = 0; iAvatarIndex < iAvatarCount; iAvatarIndex++)
     {
@@ -40,10 +40,10 @@ BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT
         yyjson_val *nodeFetter = yyjson_obj_get(AvatarEnum, "fetter");
         yyjson_val *nodeLevel = yyjson_obj_get(AvatarEnum, "level");
 
-        Result->AvatarData[iAvatarIndex].AvatarID = yyjson_get_int(nodeID);
-        Result->AvatarData[iAvatarIndex].Element = ElementTextToEnum(yyjson_get_str(nodeElement));
-        Result->AvatarData[iAvatarIndex].Fetter = yyjson_get_int(nodeFetter);
-        Result->AvatarData[iAvatarIndex].Level = yyjson_get_int(nodeLevel);
+        AvatarData[iAvatarIndex].AvatarID = yyjson_get_int(nodeID);
+        AvatarData[iAvatarIndex].Element = ElementTextToEnum(yyjson_get_str(nodeElement));
+        AvatarData[iAvatarIndex].Fetter = yyjson_get_int(nodeFetter);
+        AvatarData[iAvatarIndex].Level = yyjson_get_int(nodeLevel);
 
         AvatarEnum = unsafe_yyjson_get_next(AvatarEnum);
     }
@@ -51,7 +51,7 @@ BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, GENSHIN_USER_GAME_RECORD_RESULT
     return TRUE;
 }
 
-BOOL StatsJsonAnalysis(yyjson_val *nodeStats, GENSHIN_USER_GAME_RECORD_RESULT *Result)
+BOOL StatsJsonAnalysis(yyjson_val *nodeStats, GENSHIN_STATS_DATA &StatsData)
 {
     if (!nodeStats)
     {
@@ -72,18 +72,18 @@ BOOL StatsJsonAnalysis(yyjson_val *nodeStats, GENSHIN_USER_GAME_RECORD_RESULT *R
     yyjson_val *nodeCommonChestNumber = yyjson_obj_get(nodeStats, "common_chest_number");
 
 
-    Result->StatsData.ActiveDayNumber = yyjson_get_int(nodeActiveDayNumber);
-    Result->StatsData.AchievementNumber = yyjson_get_int(nodeAchievementNumber);
-    Result->StatsData.AnemoculusNumber = yyjson_get_int(nodeAnemoculusNumber);
-    Result->StatsData.GeoculusNumber = yyjson_get_int(nodeGeoculusNumber);
-    Result->StatsData.AvatarNumber = yyjson_get_int(nodeAvatarNumber);
-    Result->StatsData.WayPointNumber = yyjson_get_int(nodeWayPointNumber);
-    Result->StatsData.DomainNumber = yyjson_get_int(nodeDomainNumber);
-    MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeSpiralAbyss), -1, Result->StatsData.SpiralAbyss, _countof(Result->StatsData.SpiralAbyss));
-    Result->StatsData.PreciousChestNumber = yyjson_get_int(nodePreciousChestNumber);
-    Result->StatsData.LuxuriousChestNumber = yyjson_get_int(nodeLuxuriousChestNumber);
-    Result->StatsData.ExquistieChestNumber = yyjson_get_int(nodeExquistieChestNumber);
-    Result->StatsData.CommonChestNumber = yyjson_get_int(nodeCommonChestNumber);
+    StatsData.ActiveDayNumber = yyjson_get_int(nodeActiveDayNumber);
+    StatsData.AchievementNumber = yyjson_get_int(nodeAchievementNumber);
+    StatsData.AnemoculusNumber = yyjson_get_int(nodeAnemoculusNumber);
+    StatsData.GeoculusNumber = yyjson_get_int(nodeGeoculusNumber);
+    StatsData.AvatarNumber = yyjson_get_int(nodeAvatarNumber);
+    StatsData.WayPointNumber = yyjson_get_int(nodeWayPointNumber);
+    StatsData.DomainNumber = yyjson_get_int(nodeDomainNumber);
+    MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeSpiralAbyss), -1, StatsData.SpiralAbyss, _countof(StatsData.SpiralAbyss));
+    StatsData.PreciousChestNumber = yyjson_get_int(nodePreciousChestNumber);
+    StatsData.LuxuriousChestNumber = yyjson_get_int(nodeLuxuriousChestNumber);
+    StatsData.ExquistieChestNumber = yyjson_get_int(nodeExquistieChestNumber);
+    StatsData.CommonChestNumber = yyjson_get_int(nodeCommonChestNumber);
 
     return TRUE;
 }
@@ -133,12 +133,12 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
 
     if (nodeAvatars)
     {
-        AvatarJsonAnalysis(nodeAvatars, Result);
+        AvatarJsonAnalysis(nodeAvatars, Result->AvatarData);
     }
 
     if (nodeStats)
     {
-        StatsJsonAnalysis(nodeStats, Result);
+        StatsJsonAnalysis(nodeStats, Result->StatsData);
     }
 
     if (nodeCityExplorations)
