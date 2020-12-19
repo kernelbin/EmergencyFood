@@ -64,15 +64,15 @@ extern "C" int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR sz
                     {
                         if (wcsstr(szMsg, L"统计"))
                         {
-                            WCHAR *String = GetTextualizedStatsInfo(&(GameRecordResult.StatsData));
+                            ATL::CStringW String;
+                            GetTextualizedStatsInfo(&(GameRecordResult.StatsData), String);
                             SendBackMessage(MessageSource, String);
-                            ReleaseTextualizedStatsInfo(String);
                         }
                         else
                         {
-                            WCHAR *String = GetTextualizedAvatarInfo(GameRecordResult.AvatarData, GameRecordResult.AvatarCount);
+                            ATL::CStringW String;
+                            GetTextualizedAvatarInfo(GameRecordResult.AvatarData, GameRecordResult.AvatarCount, String);
                             SendBackMessage(MessageSource, String);
-                            ReleaseTextualizedAvatarInfo(String);
                         }
                         
                         break;

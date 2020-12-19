@@ -7,18 +7,10 @@
 
 #pragma once
 #include <Windows.h>
+#include <atlstr.h>
 #include "GenshinGetGameRecord.h"
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+BOOL GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA *AvatarData, int AvatarCount, ATL::CStringW &Result);
+BOOL GetTextualizedStatsInfo(GENSHIN_STATS_DATA *StatsData, ATL::CStringW &Result);
 
-WCHAR *GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA *AvatarData, int AvatarCount);
-void ReleaseTextualizedAvatarInfo(WCHAR *String);
-WCHAR *GetTextualizedStatsInfo(GENSHIN_STATS_DATA *StatsData);
-void ReleaseTextualizedStatsInfo(WCHAR *String);
-
-#ifdef __cplusplus
-}
-#endif

@@ -6,14 +6,12 @@
 
 
 #include <Windows.h>
-#include <atlstr.h>
 #include <cstdlib>
 #include "GenshinGetGameRecord.h"
+#include "GenshinTextualization.h"
 
-extern "C" WCHAR *GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA * AvatarData, int AvatarCount)
+BOOL GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA * AvatarData, int AvatarCount, ATL::CStringW &Result)
 {
-    ATL::CStringW Result;
-    
     Result = L"派蒙查到了！";
     for (int i = 0; i < AvatarCount; i++)
     {
@@ -30,22 +28,11 @@ extern "C" WCHAR *GetTextualizedAvatarInfo(GENSHIN_AVATAR_DATA * AvatarData, int
         }
     }
 
-    WCHAR *String = (WCHAR *)malloc(sizeof(WCHAR) * (Result.GetLength() + 1));
-    wcscpy_s(String, Result.GetLength() + 1, Result.GetString());
-
-    return String;
+    return TRUE;
 }
 
-extern "C" void ReleaseTextualizedAvatarInfo(WCHAR *String)
+BOOL GetTextualizedStatsInfo(GENSHIN_STATS_DATA * StatsData, ATL::CStringW &Result)
 {
-    free(String);
-    return;
-}
-
-extern "C" WCHAR * GetTextualizedStatsInfo(GENSHIN_STATS_DATA * StatsData)
-{
-    ATL::CStringW Result;
-
     Result.Format(L"派蒙查到了！"
     L"活跃天数：%d  "
     L"达成成就：%d  "
@@ -61,14 +48,5 @@ extern "C" WCHAR * GetTextualizedStatsInfo(GENSHIN_STATS_DATA * StatsData)
         StatsData->ExquistieChestNumber,
         StatsData->CommonChestNumber);
 
-    WCHAR *String = (WCHAR *)malloc(sizeof(WCHAR) * (Result.GetLength() + 1));
-    wcscpy_s(String, Result.GetLength() + 1, Result.GetString());
-
-    return String;
-}
-
-extern "C" void ReleaseTextualizedStatsInfo(WCHAR * String)
-{
-    free(String);
-    return;
+    return TRUE;
 }
