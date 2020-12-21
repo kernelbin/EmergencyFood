@@ -20,7 +20,7 @@
 
 WCHAR miHoYoServer[] = L"api-takumi.mihoyo.com";
 
-BOOL AvatarJsonAnalysis(yyjson_val *nodeAvatars, ATL::CAtlArray<GENSHIN_AVATAR_DATA> &AvatarData)
+BOOL AvatarsJsonAnalysis(yyjson_val *nodeAvatars, ATL::CAtlArray<GENSHIN_AVATAR_DATA> &AvatarData)
 {
     if (!nodeAvatars)
     {
@@ -133,7 +133,7 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
 
     if (nodeAvatars)
     {
-        AvatarJsonAnalysis(nodeAvatars, Result->AvatarData);
+        AvatarsJsonAnalysis(nodeAvatars, Result->AvatarData);
     }
 
     if (nodeStats)
