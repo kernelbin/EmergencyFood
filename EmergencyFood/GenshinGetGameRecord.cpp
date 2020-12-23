@@ -88,30 +88,30 @@ BOOL StatsJsonAnalysis(yyjson_val *nodeStats, GENSHIN_STATS_DATA &StatsData)
     return TRUE;
 }
 
-BOOL CityExplorationsJsonAnalysis(yyjson_val *nodeCityExplorations, ATL::CAtlArray<GENSHIN_CITY_EXP_DATA> &ExpData)
+BOOL WorldExplorationsJsonAnalysis(yyjson_val *nodeWorldExplorations, ATL::CAtlArray<GENSHIN_EXPLORATION_DATA> &ExplorationData)
 {
-    if (!nodeCityExplorations)
+    if (!nodeWorldExplorations)
     {
         return FALSE;
     }
 
-    int iCityCount = yyjson_arr_size(nodeCityExplorations);
+    int iRegionCount = yyjson_arr_size(nodeWorldExplorations);
 
-    yyjson_val *CityEnum = yyjson_arr_get_first(nodeCityExplorations);
+    yyjson_val *RegionEnum = yyjson_arr_get_first(nodeWorldExplorations);
 
-    ExpData.SetCount(iCityCount);
+    ExplorationData.SetCount(iRegionCount);
 
-    for (int iCityIndex = 0; iCityIndex < iCityCount; iCityIndex++)
+    for (int iRegionIndex = 0; iRegionIndex < iRegionCount; iRegionIndex++)
     {
-        yyjson_val *nodeLevel = yyjson_obj_get(CityEnum, "level");
-        yyjson_val *nodeExplorationPercentage = yyjson_obj_get(CityEnum, "exploration_percentage");
-        yyjson_val *nodeName = yyjson_obj_get(CityEnum, "name");
+        yyjson_val *nodeLevel = yyjson_obj_get(RegionEnum, "level");
+        yyjson_val *nodeExplorationPercentage = yyjson_obj_get(RegionEnum, "exploration_percentage");
+        yyjson_val *nodeName = yyjson_obj_get(RegionEnum, "name");
 
-        ExpData[iCityIndex].Level = yyjson_get_int(nodeLevel);
-        ExpData[iCityIndex].ExplorationPercentage = yyjson_get_int(nodeExplorationPercentage);
-        MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeName), -1, ExpData[iCityIndex].Name, _countof(ExpData[iCityIndex].Name));
+        ExplorationData[iRegionIndex].Level = yyjson_get_int(nodeLevel);
+        ExplorationData[iRegionIndex].ExplorationPercentage = yyjson_get_int(nodeExplorationPercentage);
+        MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeName), -1, ExplorationData[iRegionIndex].Name, _countof(ExplorationData[iRegionIndex].Name));
 
-        CityEnum = unsafe_yyjson_get_next(CityEnum);
+        RegionEnum = unsafe_yyjson_get_next(RegionEnum);
     }
 
     return TRUE;
@@ -158,7 +158,7 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
 
     yyjson_val *nodeAvatars = yyjson_obj_get(nodeData, "avatars");
     yyjson_val *nodeStats = yyjson_obj_get(nodeData, "stats");
-    yyjson_val *nodeCityExplorations = yyjson_obj_get(nodeData, "city_explorations");
+    yyjson_val *nodeWorldExplorations = yyjson_obj_get(nodeData, "world_explorations");
 
     if (nodeAvatars)
     {
@@ -170,9 +170,9 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
         StatsJsonAnalysis(nodeStats, Result->StatsData);
     }
 
-    if (nodeCityExplorations)
+    if (nodeWorldExplorations)
     {
-        CityExplorationsJsonAnalysis(nodeCityExplorations, Result->ExploationData);
+        WorldExplorationsJsonAnalysis(nodeWorldExplorations, Result->ExploationData);
     }
 
     yyjson_doc_free(nodeJsonDoc);
