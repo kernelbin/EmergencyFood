@@ -63,6 +63,20 @@ typedef struct __GENSHIN_STATS_DATA
 
 }GENSHIN_STATS_DATA;
 
+typedef struct __GENSHIN_CITY_EXP_DATA
+{
+    int Level;
+    int ExplorationPercentage;
+    WCHAR Name[32];
+
+    __GENSHIN_CITY_EXP_DATA()
+    {
+        Level = 0;
+        ExplorationPercentage = 0;
+        wcscpy_s(Name, _countof(Name), L"");
+    }
+}GENSHIN_CITY_EXP_DATA;
+
 typedef struct __GENSHIN_USER_GAME_RECORD_RESULT
 {
     int RetCode;
@@ -70,6 +84,8 @@ typedef struct __GENSHIN_USER_GAME_RECORD_RESULT
     ATL::CAtlArray<GENSHIN_AVATAR_DATA> AvatarData;
 
     GENSHIN_STATS_DATA StatsData;
+
+    ATL::CAtlArray<__GENSHIN_CITY_EXP_DATA> ExploationData;
 
     __GENSHIN_USER_GAME_RECORD_RESULT()
     {

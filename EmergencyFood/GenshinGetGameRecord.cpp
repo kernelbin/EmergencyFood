@@ -88,6 +88,35 @@ BOOL StatsJsonAnalysis(yyjson_val *nodeStats, GENSHIN_STATS_DATA &StatsData)
     return TRUE;
 }
 
+BOOL CityExplorationsJsonAnalysis(yyjson_val *nodeCityExplorations, ATL::CAtlArray<GENSHIN_CITY_EXP_DATA> &ExpData)
+{
+    if (!nodeCityExplorations)
+    {
+        return FALSE;
+    }
+
+    int iCityCount = yyjson_arr_size(nodeCityExplorations);
+
+    yyjson_val *CityEnum = yyjson_arr_get_first(nodeCityExplorations);
+
+    ExpData.SetCount(iCityCount);
+
+    for (int iCityIndex = 0; iCityIndex < iCityCount; iCityIndex++)
+    {
+        yyjson_val *nodeLevel = yyjson_obj_get(CityEnum, "level");
+        yyjson_val *nodeExplorationPercentage = yyjson_obj_get(CityEnum, "exploration_percentage");
+        yyjson_val *nodeName = yyjson_obj_get(CityEnum, "name");
+
+        ExpData[iCityIndex].Level = yyjson_get_int(nodeLevel);
+        ExpData[iCityIndex].ExplorationPercentage = yyjson_get_int(nodeExplorationPercentage);
+        MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeName), -1, ExpData[iCityIndex].Name, _countof(ExpData[iCityIndex].Name));
+
+        CityEnum = unsafe_yyjson_get_next(CityEnum);
+    }
+
+    return TRUE;
+}
+
 BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_USER_GAME_RECORD_RESULT *Result)
 {
     yyjson_doc *nodeJsonDoc = yyjson_read(lpJsonData, JsonDataLength, 0);
@@ -143,7 +172,7 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
 
     if (nodeCityExplorations)
     {
-        // TODO: analysis
+        CityExplorationsJsonAnalysis(nodeCityExplorations, Result->ExploationData);
     }
 
     yyjson_doc_free(nodeJsonDoc);
