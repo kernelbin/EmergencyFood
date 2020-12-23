@@ -50,3 +50,23 @@ BOOL GetTextualizedStatsInfo(GENSHIN_STATS_DATA &StatsData, ATL::CStringW &Resul
 
     return TRUE;
 }
+
+BOOL GetTextualizedExplorationInfo(ATL::CAtlArray<GENSHIN_CITY_EXP_DATA> &ExplorationData, ATL::CStringW &Result)
+{
+    Result = L"派蒙查到了！";
+    for (unsigned int i = 0; i < ExplorationData.GetCount(); i++)
+    {
+        ATL::CStringW Buffer;
+        Buffer.Format(L"%ls：%d级，%d.%d",
+            ExplorationData[i].Name,
+            ExplorationData[i].Level,
+            ExplorationData[i].ExplorationPercentage / 10, ExplorationData[i].ExplorationPercentage % 10);
+
+        Result.Append(Buffer);
+        if (i != ExplorationData.GetCount() - 1)
+        {
+            Result.Append(L" | ");
+        }
+    }
+    return TRUE;
+}

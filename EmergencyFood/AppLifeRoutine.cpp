@@ -68,6 +68,12 @@ extern "C" int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR sz
                             GetTextualizedStatsInfo(GameRecordResult.StatsData, String);
                             SendBackMessage(MessageSource, String);
                         }
+                        else if (wcsstr(szMsg, L"探索"))
+                        {
+                            ATL::CStringW String;
+                            GetTextualizedExplorationInfo(GameRecordResult.ExploationData, String);
+                            SendBackMessage(MessageSource, String);
+                        }
                         else
                         {
                             ATL::CStringW String;
