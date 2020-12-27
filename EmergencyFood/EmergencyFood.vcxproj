@@ -146,11 +146,17 @@
     <Library Include="CQP.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AppLifeRoutine.c" />
+    <ClCompile Include="AppLifeRoutine.cpp" />
     <ClCompile Include="CoolQ_API_Entry.c" />
     <ClCompile Include="CQAPITransfer.c" />
     <ClCompile Include="DllMain.c" />
     <ClCompile Include="EncodeConvert.c" />
+    <ClCompile Include="GenshinAPIBase.cpp" />
+    <ClCompile Include="GenshinBasic.c" />
+    <ClCompile Include="GenshinGetGameRecord.cpp" />
+    <ClCompile Include="GenshinTextualization.cpp" />
+    <ClCompile Include="md5.c" />
+    <ClCompile Include="yyjson.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppLifeRoutine.h" />
@@ -158,6 +164,12 @@
     <ClInclude Include="CoolQ_State.h" />
     <ClInclude Include="CQAPITransfer.h" />
     <ClInclude Include="EncodeConvert.h" />
+    <ClInclude Include="GenshinAPIBase.h" />
+    <ClInclude Include="GenshinBasic.h" />
+    <ClInclude Include="GenshinGetGameRecord.h" />
+    <ClInclude Include="GenshinTextualization.h" />
+    <ClInclude Include="md5.h" />
+    <ClInclude Include="yyjson.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.json" />
