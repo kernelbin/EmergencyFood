@@ -75,3 +75,4 @@ BOOL GenshinAddAPIHttpHeader(HINTERNET hRequest)
     // TODO: check for error
     return TRUE;
 }
+

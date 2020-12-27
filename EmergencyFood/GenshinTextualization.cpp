@@ -70,3 +70,4 @@ BOOL GetTextualizedExplorationInfo(ATL::CAtlArray<GENSHIN_EXPLORATION_DATA> &Exp
     }
     return TRUE;
 }
+
