@@ -155,6 +155,7 @@
     <ClCompile Include="GenshinBasic.c" />
     <ClCompile Include="GenshinGetGameRecord.cpp" />
     <ClCompile Include="GenshinTextualization.cpp" />
+    <ClCompile Include="InteractHandling.cpp" />
     <ClCompile Include="md5.c" />
     <ClCompile Include="yyjson.c" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="GenshinBasic.h" />
     <ClInclude Include="GenshinGetGameRecord.h" />
     <ClInclude Include="GenshinTextualization.h" />
+    <ClInclude Include="InteractHandling.h" />
     <ClInclude Include="md5.h" />
     <ClInclude Include="yyjson.h" />
   </ItemGroup>
