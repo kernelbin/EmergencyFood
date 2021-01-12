@@ -117,45 +117,8 @@ BOOL WorldExplorationsJsonAnalysis(yyjson_val *nodeWorldExplorations, ATL::CAtlA
     return TRUE;
 }
 
-BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_USER_GAME_RECORD_RESULT *Result)
+BOOL UserGameRecordJsonAnalysis(yyjson_val *nodeData, GENSHIN_USER_GAME_RECORD_RESULT *Result)
 {
-    yyjson_doc *nodeJsonDoc = yyjson_read(lpJsonData, JsonDataLength, 0);
-    if (!nodeJsonDoc)
-    {
-        return FALSE;
-    }
-
-    yyjson_val *nodeRoot = yyjson_doc_get_root(nodeJsonDoc);
-    if (!nodeRoot)
-    {
-        // Failed to get root
-        yyjson_doc_free(nodeJsonDoc);
-        return FALSE;
-    }
-
-    yyjson_val *nodeRetCode = yyjson_obj_get(nodeRoot, "retcode");
-    if (!nodeRetCode)
-    {
-        // RetCode not found
-        yyjson_doc_free(nodeJsonDoc);
-        return FALSE;
-    }
-
-    yyjson_val *nodeData = yyjson_obj_get(nodeRoot, "data");
-    if (!nodeData)
-    {
-        // Data not found
-        yyjson_doc_free(nodeJsonDoc);
-        return FALSE;
-    }
-
-    Result->RetCode = yyjson_get_int(nodeRetCode);
-    if (Result->RetCode != 0)
-    {
-        yyjson_doc_free(nodeJsonDoc);
-        return TRUE;
-    }
-
     yyjson_val *nodeAvatars = yyjson_obj_get(nodeData, "avatars");
     yyjson_val *nodeStats = yyjson_obj_get(nodeData, "stats");
     yyjson_val *nodeWorldExplorations = yyjson_obj_get(nodeData, "world_explorations");
@@ -175,7 +138,6 @@ BOOL UserGameRecordJsonAnalysis(LPCSTR lpJsonData, int JsonDataLength, GENSHIN_U
         WorldExplorationsJsonAnalysis(nodeWorldExplorations, Result->ExploationData);
     }
 
-    yyjson_doc_free(nodeJsonDoc);
     return TRUE;
 }
 
@@ -239,18 +201,9 @@ extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RE
         return FALSE;
     }
 
+    GENSHIN_API_RESULT GenshinAPIResult;
     
-    WCHAR cookie[] = L""; // fill your cookies here
-    
-    HttpAddRequestHeadersW(hRequest, cookie, -1,
-        HTTP_ADDREQ_FLAG_ADD | HTTP_ADDREQ_FLAG_REPLACE);
-    
-    GenshinAddAPIHttpHeader(hRequest);
-
-
-    BOOL bSuccess = HttpSendRequestW(hRequest, NULL, NULL, NULL, NULL);
-
-    if (!bSuccess)
+    if (!GenshinAPISendRequest(hRequest, GenshinAPIResult))
     {
         InternetCloseHandle(hRequest);
         InternetCloseHandle(hConnect);
@@ -258,38 +211,8 @@ extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RE
         return FALSE;
     }
 
-    ATL::CAtlArray<BYTE> Buffer;
-    DWORD AccumBytesRead = 0;
-    for (;;)
-    {
-        DWORD BytesRead = 0;
-        Buffer.SetCount(AccumBytesRead + 1024);
-        BOOL bSuccess = InternetReadFile(hRequest, Buffer.GetData() + AccumBytesRead, 1024, &BytesRead);
-
-        if (!bSuccess)
-        {
-            InternetCloseHandle(hRequest);
-            InternetCloseHandle(hConnect);
-            InternetCloseHandle(hInternet);
-            return FALSE;
-        }
-
-        if (BytesRead == 0)
-        {
-            break;
-        }
-        else
-        {
-            AccumBytesRead += BytesRead;
-        }
-    }
-    
-    // ensure zero terminated.
-    Buffer.SetCount(AccumBytesRead + 1);
-    Buffer[AccumBytesRead] = 0;
-
-    // analysis json text
-    BOOL bAnalysisResult = UserGameRecordJsonAnalysis((LPCSTR)Buffer.GetData(), AccumBytesRead, Result);
+    Result->RetCode = GenshinAPIResult.RetCode;
+    BOOL bAnalysisResult = UserGameRecordJsonAnalysis(GenshinAPIResult.nodeData, Result);
 
     InternetCloseHandle(hRequest);
     InternetCloseHandle(hConnect);
