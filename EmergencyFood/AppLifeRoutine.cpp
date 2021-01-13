@@ -17,11 +17,13 @@
 
 extern "C" int AppInitialize()//初始化时会被执行
 {
+    InitializeGenshinAPI(TRUE);
     return 0;
 }
 
 extern "C" int AppFinialize()//结束时会被执行
 {
+    InitializeGenshinAPI(FALSE);
     return 0;
 }
 

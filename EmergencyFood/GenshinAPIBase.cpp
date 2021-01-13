@@ -11,6 +11,53 @@
 #include "md5.h"
 #include "GenshinAPIBase.h"
 
+#pragma comment(lib, "wininet.lib")
+
+
+WCHAR miHoYoServer[] = L"api-takumi.mihoyo.com";
+
+HINTERNET hInternet = NULL, hConnect = NULL;
+
+BOOL InitializeGenshinAPI(BOOL bInitialize)
+{
+    if (bInitialize)
+    {
+        // Initiate WinINet
+        hInternet = InternetOpenW(L"EmergencyFood", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, NULL);
+
+        if (!hInternet)
+        {
+            return FALSE;
+        }
+
+        hConnect = InternetConnectW(hInternet,
+            miHoYoServer, INTERNET_DEFAULT_HTTP_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
+
+        if (!hConnect)
+        {
+            InternetCloseHandle(hInternet);
+            hInternet = NULL;
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+    else
+    {
+        InternetCloseHandle(hConnect);
+        hConnect = 0;
+        InternetCloseHandle(hInternet);
+        hInternet = 0;
+
+        return TRUE;
+    }
+}
+
+HINTERNET GetmiHoYoServerConnect()
+{
+    return hConnect;
+}
+
 long long GetPresentUnixTime()
 {
     SYSTEMTIME st;
