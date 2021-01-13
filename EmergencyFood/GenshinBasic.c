@@ -34,6 +34,7 @@ const GENSHIN_AVATAR_INFO GenshinAvatarInfoList[] =
     {10000034, L"诺艾尔", ELEMENT_GEO},
     {10000035, L"七七", ELEMENT_CRYO},
     {10000036, L"重云", ELEMENT_CRYO},
+    {10000037, L"甘雨", ELEMENT_CRYO},
     {10000038, L"阿贝多", ELEMENT_GEO},
     {10000039, L"迪奥娜", ELEMENT_CRYO},
     {10000041, L"莫娜", ELEMENT_HYDRO},
