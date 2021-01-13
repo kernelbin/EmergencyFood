@@ -10,6 +10,7 @@
 #include <Windows.h>
 #include <WinINet.h>
 #include <atlcoll.h>
+#include <atlstr.h>
 #include "yyjson.h"
 
 
@@ -36,6 +37,7 @@ public:
 
     // information retrieved from json
     int RetCode;
+    ATL::CStringW Message;
     yyjson_val *nodeData;
     
     friend BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult);

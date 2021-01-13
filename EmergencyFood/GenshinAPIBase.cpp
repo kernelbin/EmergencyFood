@@ -152,9 +152,21 @@ BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIRes
         return FALSE;
     }
 
+    yyjson_val *nodeMessage = yyjson_obj_get(nodeRoot, "message");
+    // ok if message not exist
+
     GenshinAPIResult.JsonDoc = JsonDoc; // will be released when GenshinAPIResult destructs
     GenshinAPIResult.RetCode = yyjson_get_int(nodeRetCode);
     GenshinAPIResult.nodeData = nodeData;
+
+    if (nodeMessage)
+    {
+        int CChMessageLen = MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeMessage), -1, 0, 0);
+        MultiByteToWideChar(CP_UTF8, 0,
+            yyjson_get_str(nodeMessage), -1,
+            GenshinAPIResult.Message.GetBuffer(CChMessageLen), CChMessageLen);
+        GenshinAPIResult.Message.ReleaseBuffer();
+    }
 
     return TRUE;
 }
