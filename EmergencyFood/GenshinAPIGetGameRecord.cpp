@@ -16,10 +16,6 @@
 #include "md5.h"
 #include "yyjson.h"
 
-#pragma comment(lib, "wininet.lib")
-
-WCHAR miHoYoServer[] = L"api-takumi.mihoyo.com";
-
 BOOL AvatarsJsonAnalysis(yyjson_val *nodeAvatars, ATL::CAtlArray<GENSHIN_AVATAR_DATA> &AvatarData)
 {
     if (!nodeAvatars)
@@ -176,50 +172,26 @@ extern "C" BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME
         // server not supported, or wrong UID
         return FALSE;
     }
-
-    // Initiate a request
-    // TODO: reuse hInternet and hConnect instead of opening one each time.
-    HINTERNET hInternet = InternetOpenW(L"EmergencyFood", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, NULL);
-
-    if (!hInternet)
-    {
-        return FALSE;
-    }
-    
-    HINTERNET hConnect = InternetConnectW(hInternet,
-        miHoYoServer, INTERNET_DEFAULT_HTTP_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
-
-    if (!hConnect)
-    {
-        InternetCloseHandle(hInternet);
-        return FALSE;
-    }
     
     const WCHAR *rgpszAcceptTypes[] = { L"*/*", NULL };
 
-    HINTERNET hRequest = HttpOpenRequestW(hConnect, L"GET", RequestURL,
+    HINTERNET hRequest = HttpOpenRequestW(GetmiHoYoServerConnect(), L"GET", RequestURL,
         NULL, NULL, rgpszAcceptTypes, INTERNET_FLAG_RELOAD | INTERNET_FLAG_NO_COOKIES, NULL);
 
     if (!hRequest)
     {
-        InternetCloseHandle(hConnect);
-        InternetCloseHandle(hInternet);
         return FALSE;
     }
     
     if (!GenshinAPISendRequest(hRequest, Result))
     {
         InternetCloseHandle(hRequest);
-        InternetCloseHandle(hConnect);
-        InternetCloseHandle(hInternet);
         return FALSE;
     }
     
     BOOL bAnalysisResult = UserGameRecordJsonAnalysis(Result);
 
     InternetCloseHandle(hRequest);
-    InternetCloseHandle(hConnect);
-    InternetCloseHandle(hInternet);
 
     return bAnalysisResult;
 }

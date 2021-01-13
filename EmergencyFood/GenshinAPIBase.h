@@ -43,6 +43,8 @@ public:
     friend BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult);
 };
 
-BOOL GenshinAddAPIHttpHeader(HINTERNET hRequest);
+BOOL InitializeGenshinAPI(BOOL bInitialize);
+
+HINTERNET GetmiHoYoServerConnect();
 
 BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult);
