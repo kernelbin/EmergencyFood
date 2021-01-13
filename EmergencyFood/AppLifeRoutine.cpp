@@ -76,7 +76,7 @@ extern "C" int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR sz
                         WCHAR szUID[10];
                         swprintf(szUID, _countof(szUID), L"%lld", UID);
                         GENSHIN_USER_GAME_RECORD_RESULT GameRecordResult;
-                        BOOL bSuccess = GenshinGetUserGameRecord(szUID, &GameRecordResult);
+                        BOOL bSuccess = GenshinGetUserGameRecord(szUID, GameRecordResult);
 
                         if (bSuccess)
                         {

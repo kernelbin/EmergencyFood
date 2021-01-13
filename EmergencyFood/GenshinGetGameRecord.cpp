@@ -117,7 +117,7 @@ BOOL WorldExplorationsJsonAnalysis(yyjson_val *nodeWorldExplorations, ATL::CAtlA
     return TRUE;
 }
 
-BOOL UserGameRecordJsonAnalysis(yyjson_val *nodeData, GENSHIN_USER_GAME_RECORD_RESULT *Result)
+BOOL UserGameRecordJsonAnalysis(yyjson_val *nodeData, GENSHIN_USER_GAME_RECORD_RESULT &Result)
 {
     yyjson_val *nodeAvatars = yyjson_obj_get(nodeData, "avatars");
     yyjson_val *nodeStats = yyjson_obj_get(nodeData, "stats");
@@ -125,23 +125,23 @@ BOOL UserGameRecordJsonAnalysis(yyjson_val *nodeData, GENSHIN_USER_GAME_RECORD_R
 
     if (nodeAvatars)
     {
-        AvatarsJsonAnalysis(nodeAvatars, Result->AvatarData);
+        AvatarsJsonAnalysis(nodeAvatars, Result.AvatarData);
     }
 
     if (nodeStats)
     {
-        StatsJsonAnalysis(nodeStats, Result->StatsData);
+        StatsJsonAnalysis(nodeStats, Result.StatsData);
     }
 
     if (nodeWorldExplorations)
     {
-        WorldExplorationsJsonAnalysis(nodeWorldExplorations, Result->ExploationData);
+        WorldExplorationsJsonAnalysis(nodeWorldExplorations, Result.ExploationData);
     }
 
     return TRUE;
 }
 
-extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT * Result)
+extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result)
 {
     if (!UID)
     {
@@ -203,15 +203,14 @@ extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RE
 
     GENSHIN_API_RESULT GenshinAPIResult;
     
-    if (!GenshinAPISendRequest(hRequest, GenshinAPIResult))
+    if (!GenshinAPISendRequest(hRequest, Result))
     {
         InternetCloseHandle(hRequest);
         InternetCloseHandle(hConnect);
         InternetCloseHandle(hInternet);
         return FALSE;
     }
-
-    Result->RetCode = GenshinAPIResult.RetCode;
+    
     BOOL bAnalysisResult = UserGameRecordJsonAnalysis(GenshinAPIResult.nodeData, Result);
 
     InternetCloseHandle(hRequest);

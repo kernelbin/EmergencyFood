@@ -22,6 +22,8 @@ public:
     GENSHIN_API_RESULT()
     {
         JsonDoc = NULL;
+        nodeData = NULL;
+        RetCode = -1;
     }
 
     ~GENSHIN_API_RESULT()
