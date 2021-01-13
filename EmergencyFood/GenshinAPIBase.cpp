@@ -9,6 +9,7 @@
 #include <WinINet.h>
 #include <atlstr.h>
 #include "md5.h"
+#include "GenshinAPIBase.h"
 
 long long GetPresentUnixTime()
 {
@@ -76,3 +77,96 @@ BOOL GenshinAddAPIHttpHeader(HINTERNET hRequest)
     return TRUE;
 }
 
+BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult)
+{
+    WCHAR cookie[] = L""; // fill your cookies here
+
+    HttpAddRequestHeadersW(hRequest, cookie, -1,
+        HTTP_ADDREQ_FLAG_ADD | HTTP_ADDREQ_FLAG_REPLACE);
+
+    GenshinAddAPIHttpHeader(hRequest);
+
+    BOOL bSuccess = HttpSendRequestW(hRequest, NULL, NULL, NULL, NULL);
+
+    if (!bSuccess)
+    {
+        return FALSE;
+    }
+
+    ATL::CAtlArray<BYTE> Buffer;
+    DWORD AccumBytesRead = 0;
+    for (;;)
+    {
+        DWORD BytesRead = 0;
+        Buffer.SetCount(AccumBytesRead + 1024);
+        BOOL bSuccess = InternetReadFile(hRequest, Buffer.GetData() + AccumBytesRead, 1024, &BytesRead);
+
+        if (!bSuccess)
+        {
+            return FALSE;
+        }
+
+        if (BytesRead == 0)
+        {
+            break;
+        }
+        else
+        {
+            AccumBytesRead += BytesRead;
+        }
+    }
+
+    // ensure zero terminated.
+    Buffer.SetCount(AccumBytesRead + 1);
+    Buffer[AccumBytesRead] = 0;
+
+
+    yyjson_doc *JsonDoc = yyjson_read((LPCSTR)Buffer.GetData(), AccumBytesRead, 0);
+
+    if (!JsonDoc)
+    {
+        return FALSE;
+    }
+
+    yyjson_val *nodeRoot = yyjson_doc_get_root(JsonDoc);
+    if (!nodeRoot)
+    {
+        // Failed to get root
+        yyjson_doc_free(JsonDoc);
+        return FALSE;
+    }
+
+    yyjson_val *nodeRetCode = yyjson_obj_get(nodeRoot, "retcode");
+    if (!nodeRetCode)
+    {
+        // RetCode not found
+        yyjson_doc_free(JsonDoc);
+        return FALSE;
+    }
+
+    yyjson_val *nodeData = yyjson_obj_get(nodeRoot, "data");
+    if (!nodeData)
+    {
+        // Data not found
+        yyjson_doc_free(JsonDoc);
+        return FALSE;
+    }
+
+    yyjson_val *nodeMessage = yyjson_obj_get(nodeRoot, "message");
+    // ok if message not exist
+
+    GenshinAPIResult.JsonDoc = JsonDoc; // will be released when GenshinAPIResult destructs
+    GenshinAPIResult.RetCode = yyjson_get_int(nodeRetCode);
+    GenshinAPIResult.nodeData = nodeData;
+
+    if (nodeMessage)
+    {
+        int CChMessageLen = MultiByteToWideChar(CP_UTF8, 0, yyjson_get_str(nodeMessage), -1, 0, 0);
+        MultiByteToWideChar(CP_UTF8, 0,
+            yyjson_get_str(nodeMessage), -1,
+            GenshinAPIResult.Message.GetBuffer(CChMessageLen), CChMessageLen);
+        GenshinAPIResult.Message.ReleaseBuffer();
+    }
+
+    return TRUE;
+}

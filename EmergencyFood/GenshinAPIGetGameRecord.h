@@ -10,6 +10,8 @@
 #include <Windows.h>
 #include <atlcoll.h>
 #include "GenshinBasic.h"
+#include "GenshinAPIBase.h"
+
 
 typedef struct __GENSHIN_AVATAR_DATA
 {
@@ -77,26 +79,20 @@ typedef struct __GENSHIN_EXPLORATION_DATA
     }
 }GENSHIN_EXPLORATION_DATA;
 
-typedef struct __GENSHIN_USER_GAME_RECORD_RESULT
+typedef struct __GENSHIN_USER_GAME_RECORD_RESULT :
+    GENSHIN_API_RESULT
 {
-    int RetCode;
-
     ATL::CAtlArray<GENSHIN_AVATAR_DATA> AvatarData;
 
     GENSHIN_STATS_DATA StatsData;
 
     ATL::CAtlArray<__GENSHIN_EXPLORATION_DATA> ExploationData;
 
-    __GENSHIN_USER_GAME_RECORD_RESULT()
-    {
-        RetCode = -1;
-    }
-
 }GENSHIN_USER_GAME_RECORD_RESULT;
 
 #ifdef __cplusplus
-extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT * Result);
+extern "C" BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result);
 #else
-BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT *Result);
+BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT *Result);
 #endif
 
