@@ -8,7 +8,7 @@
 #pragma once
 #include <Windows.h>
 #include <atlstr.h>
-#include "GenshinGetGameRecord.h"
+#include "GenshinAPIGetGameRecord.h"
 
 
 BOOL GetTextualizedAvatarInfo(ATL::CAtlArray<GENSHIN_AVATAR_DATA> &AvatarData, ATL::CStringW &Result);

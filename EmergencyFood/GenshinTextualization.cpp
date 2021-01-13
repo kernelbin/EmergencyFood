@@ -7,7 +7,7 @@
 
 #include <Windows.h>
 #include <cstdlib>
-#include "GenshinGetGameRecord.h"
+#include "GenshinAPIGetGameRecord.h"
 #include "GenshinTextualization.h"
 
 BOOL GetTextualizedAvatarInfo(ATL::CAtlArray<GENSHIN_AVATAR_DATA> &AvatarData, ATL::CStringW &Result)

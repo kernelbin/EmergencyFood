@@ -10,7 +10,7 @@
 #include <atlstr.h>
 #include <atlcoll.h>
 #include <cstdlib>
-#include "GenshinGetGameRecord.h"
+#include "GenshinAPIGetGameRecord.h"
 #include "GenshinBasic.h"
 #include "GenshinAPIBase.h"
 #include "md5.h"
@@ -141,7 +141,7 @@ BOOL UserGameRecordJsonAnalysis(yyjson_val *nodeData, GENSHIN_USER_GAME_RECORD_R
     return TRUE;
 }
 
-extern "C" BOOL GenshinGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result)
+extern "C" BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result)
 {
     if (!UID)
     {
