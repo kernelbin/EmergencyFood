@@ -93,6 +93,6 @@ typedef struct __GENSHIN_USER_GAME_RECORD_RESULT :
 #ifdef __cplusplus
 extern "C" BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result);
 #else
-BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT *Result);
+BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result);
 #endif
 
