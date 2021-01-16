@@ -50,7 +50,7 @@ GENSHIN_ELEMENT ElementTextToEnum(const char *ElementText)
     {
         if (strcmp(GenshinElementList[i], ElementText) == 0)
         {
-            return i;
+            return (GENSHIN_ELEMENT)i;
         }
     }
     return ELEMENT_ERROR;
@@ -68,4 +68,16 @@ const WCHAR *GetAvatarNameByID(int ID)
         }
     }
     return NULL;
+}
+
+int GetAvatarIDByName(const WCHAR Name[])
+{
+    for (int i = 0; i < _countof(GenshinAvatarInfoList); i++)
+    {
+        if (wcscmp(Name, GenshinAvatarInfoList[i].AvatarName_zhCN) == 0)
+        {
+            return GenshinAvatarInfoList[i].AvatarID;
+        }
+    }
+    return 0;
 }

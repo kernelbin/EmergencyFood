@@ -13,23 +13,6 @@
 #include "GenshinAPIBase.h"
 
 
-typedef struct __GENSHIN_AVATAR_DATA
-{
-    int AvatarID;
-    GENSHIN_ELEMENT Element;
-    int Fetter;
-    int Level;
-
-    __GENSHIN_AVATAR_DATA()
-    {
-        AvatarID = 0;
-        Element = ELEMENT_NONE;
-        Fetter = 0;
-        Level = 0;
-    }
-    
-}GENSHIN_AVATAR_DATA;
-
 typedef struct __GENSHIN_STATS_DATA
 {
     int ActiveDayNumber;
@@ -93,6 +76,6 @@ typedef struct __GENSHIN_USER_GAME_RECORD_RESULT :
 #ifdef __cplusplus
 extern "C" BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result);
 #else
-BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT *Result);
+BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME_RECORD_RESULT &Result);
 #endif
 

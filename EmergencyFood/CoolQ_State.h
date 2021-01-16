@@ -9,5 +9,5 @@
 
 #include <Windows.h>
 
-int CQAuthCode;
-int CQEnabled;
+extern int CQAuthCode;
+extern int CQEnabled;

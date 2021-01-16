@@ -40,11 +40,13 @@ public:
     ATL::CStringW Message;
     yyjson_val *nodeData;
     
-    friend BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult);
+    friend BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult, LPVOID lpOptional, DWORD dwOptionalLength);
 };
 
 BOOL InitializeGenshinAPI(BOOL bInitialize);
 
 HINTERNET GetmiHoYoServerConnect();
 
-BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult);
+const WCHAR *GetServerNameByUID(const WCHAR UID[]);
+
+BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult, LPVOID lpOptional, DWORD dwOptionalLength);
