@@ -65,9 +65,6 @@
     <ClCompile Include="yyjson.c">
       <Filter>源文件\yyjson</Filter>
     </ClCompile>
-    <ClCompile Include="GenshinBasic.c">
-      <Filter>源文件\GenshinImpactAPI</Filter>
-    </ClCompile>
     <ClCompile Include="GenshinTextualization.cpp">
       <Filter>源文件\GenshinImpactAPI</Filter>
     </ClCompile>
@@ -81,6 +78,12 @@
       <Filter>源文件\Interact</Filter>
     </ClCompile>
     <ClCompile Include="GenshinAPIGetGameRecord.cpp">
+      <Filter>源文件\GenshinImpactAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="GenshinAPICharacter.cpp">
+      <Filter>源文件\GenshinImpactAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="GenshinBasic.cpp">
       <Filter>源文件\GenshinImpactAPI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,6 +122,9 @@
       <Filter>头文件\Interact</Filter>
     </ClInclude>
     <ClInclude Include="GenshinAPIGetGameRecord.h">
+      <Filter>头文件\GenshinImpactAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="GenshinAPICharacter.h">
       <Filter>头文件\GenshinImpactAPI</Filter>
     </ClInclude>
   </ItemGroup>

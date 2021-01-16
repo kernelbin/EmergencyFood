@@ -7,9 +7,11 @@
 
 #include <Windows.h>
 #include <wchar.h>
+#include <atlcoll.h>
 #include "CQAPITransfer.h"
 #include "AppLifeRoutine.h"
 #include "GenshinAPIGetGameRecord.h"
+#include "GenshinAPICharacter.h"
 #include "GenshinTextualization.h"
 #include "InteractHandling.h"
 
@@ -75,60 +77,157 @@ extern "C" int OnRecvMessage(int msgId, MESSAGE_SOURCE MessageSource, LPCWSTR sz
                     }
                     else
                     {
-                        WCHAR szUID[10];
-                        swprintf(szUID, _countof(szUID), L"%lld", UID);
-                        GENSHIN_USER_GAME_RECORD_RESULT GameRecordResult;
-                        BOOL bSuccess = GenshinAPIGetUserGameRecord(szUID, GameRecordResult);
+                        // UID length is 9
+                        szCommand += 9;
+                        szCommand += GetSpacingCharLength(szCommand);
 
-                        if (bSuccess)
+                        if (szCommand[0] == L'\0')
                         {
-                            switch (GameRecordResult.RetCode)
+                            WCHAR szUID[10];
+                            swprintf(szUID, _countof(szUID), L"%lld", UID);
+                            GENSHIN_USER_GAME_RECORD_RESULT GameRecordResult;
+                            BOOL bSuccess = GenshinAPIGetUserGameRecord(szUID, GameRecordResult);
+
+                            if (bSuccess)
                             {
-                            case 0:
-                            {
-                                if (wcsstr(szCommand, L"统计"))
+                                switch (GameRecordResult.RetCode)
                                 {
-                                    ATL::CStringW String;
-                                    GetTextualizedStatsInfo(GameRecordResult.StatsData, String);
-                                    SendBackMessage(MessageSource, String);
-                                }
-                                else if (wcsstr(szCommand, L"探索"))
-                                {
-                                    ATL::CStringW String;
-                                    GetTextualizedExplorationInfo(GameRecordResult.ExploationData, String);
-                                    SendBackMessage(MessageSource, String);
-                                }
-                                else
+                                case 0:
                                 {
                                     ATL::CStringW String;
                                     GetTextualizedAvatarInfo(GameRecordResult.AvatarData, String);
                                     SendBackMessage(MessageSource, String);
+                                    break;
+                                }
+                                case 10101:
+                                {
+                                    // TODO: change another cookie and retry
+                                    SendBackMessage(MessageSource, L"派蒙...派蒙饿了！cookies被吃光了！");
+                                    break;
+                                }
+                                case 10102:
+                                {
+                                    SendBackMessage(MessageSource, L"派蒙什么也没有查到！在米游社里打开原神数据公开，派蒙才能查呢！");
+                                    break;
+                                }
+                                default:
+                                {
+                                    SendBackMessage(MessageSource, L"好像哪里出了什么错呢！派蒙也不知道出了什么问题！");
+                                    break;
+                                }
                                 }
 
-                                break;
                             }
-                            case 10101:
+                            else
                             {
-                                // TODO: change another cookie and retry
-                                SendBackMessage(MessageSource, L"派蒙...派蒙饿了！cookies被吃光了！");
-                                break;
+                                SendBackMessage(MessageSource, L"查询失败了！额，派蒙也不知道为什么（思考）");
                             }
-                            case 10102:
-                            {
-                                SendBackMessage(MessageSource, L"派蒙什么也没有查到！在米游社里打开原神数据公开，派蒙才能查呢！");
-                                break;
-                            }
-                            default:
-                            {
-                                SendBackMessage(MessageSource, L"好像哪里出了什么错呢！派蒙也不知道出了什么问题！");
-                                break;
-                            }
-                            }
+                        }
+                        else if (wcscmp(szCommand, L"统计") == 0)
+                        {
+                            WCHAR szUID[10];
+                            swprintf(szUID, _countof(szUID), L"%lld", UID);
+                            GENSHIN_USER_GAME_RECORD_RESULT GameRecordResult;
+                            BOOL bSuccess = GenshinAPIGetUserGameRecord(szUID, GameRecordResult);
 
+                            if (bSuccess)
+                            {
+                                switch (GameRecordResult.RetCode)
+                                {
+                                case 0:
+                                {
+                                    ATL::CStringW String;
+                                    GetTextualizedStatsInfo(GameRecordResult.StatsData, String);
+                                    SendBackMessage(MessageSource, String);
+                                    break;
+                                }
+                                case 10101:
+                                {
+                                    // TODO: change another cookie and retry
+                                    SendBackMessage(MessageSource, L"派蒙...派蒙饿了！cookies被吃光了！");
+                                    break;
+                                }
+                                case 10102:
+                                {
+                                    SendBackMessage(MessageSource, L"派蒙什么也没有查到！在米游社里打开原神数据公开，派蒙才能查呢！");
+                                    break;
+                                }
+                                default:
+                                {
+                                    SendBackMessage(MessageSource, L"好像哪里出了什么错呢！派蒙也不知道出了什么问题！");
+                                    break;
+                                }
+                                }
+
+                            }
+                            else
+                            {
+                                SendBackMessage(MessageSource, L"查询失败了！额，派蒙也不知道为什么（思考）");
+                            }
+                        }
+                        else if (wcscmp(szCommand, L"探索") == 0)
+                        {
+                            WCHAR szUID[10];
+                            swprintf(szUID, _countof(szUID), L"%lld", UID);
+                            GENSHIN_USER_GAME_RECORD_RESULT GameRecordResult;
+                            BOOL bSuccess = GenshinAPIGetUserGameRecord(szUID, GameRecordResult);
+
+                            if (bSuccess)
+                            {
+                                switch (GameRecordResult.RetCode)
+                                {
+                                case 0:
+                                {
+                                    ATL::CStringW String;
+                                    GetTextualizedExplorationInfo(GameRecordResult.ExploationData, String);
+                                    SendBackMessage(MessageSource, String);
+                                    break;
+                                }
+                                case 10101:
+                                {
+                                    // TODO: change another cookie and retry
+                                    SendBackMessage(MessageSource, L"派蒙...派蒙饿了！cookies被吃光了！");
+                                    break;
+                                }
+                                case 10102:
+                                {
+                                    SendBackMessage(MessageSource, L"派蒙什么也没有查到！在米游社里打开原神数据公开，派蒙才能查呢！");
+                                    break;
+                                }
+                                default:
+                                {
+                                    SendBackMessage(MessageSource, L"好像哪里出了什么错呢！派蒙也不知道出了什么问题！");
+                                    break;
+                                }
+                                }
+
+                            }
+                            else
+                            {
+                                SendBackMessage(MessageSource, L"查询失败了！额，派蒙也不知道为什么（思考）");
+                            }
                         }
                         else
                         {
-                            SendBackMessage(MessageSource, L"查询失败了！额，派蒙也不知道为什么（思考）");
+                            int AvatarID;
+                            if ((AvatarID = GetAvatarIDByName(szCommand)) != 0)
+                            {
+                                WCHAR szUID[10];
+                                swprintf(szUID, _countof(szUID), L"%lld", UID);
+                                GENSHIN_CHARACTER_RESULT CharacterResult;
+                                ATL::CAtlArray<int> QueryCharacterID;
+                                QueryCharacterID.Add(AvatarID);
+                                GenshinAPICharacter(szUID, QueryCharacterID, CharacterResult);
+
+                                ATL::CStringW String;       
+                                GetTextualizedAvatarDetailedInfo(CharacterResult.AvatarData, String);
+                                SendBackMessage(MessageSource, String);
+                                
+                            }
+                            else
+                            {
+                                SendBackMessage(MessageSource, L"额，派蒙听不懂你在说什么....");
+                            }
                         }
                     }
                 }

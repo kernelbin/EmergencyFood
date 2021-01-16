@@ -158,32 +158,25 @@ extern "C" BOOL GenshinAPIGetUserGameRecord(const WCHAR UID[], GENSHIN_USER_GAME
         return FALSE;
     }
 
-    switch (UID[0])
+    const WCHAR *ServerName = GetServerNameByUID(UID);
+    if (!ServerName)
     {
-    case L'1':
-        // China, official server
-        RequestURL.Format(L"/game_record/genshin/api/index?server=%ls&role_id=%ls", L"cn_gf01", UID);
-        break;
-    case L'5':
-        // China, bilibili server
-        RequestURL.Format(L"/game_record/genshin/api/index?server=%ls&role_id=%ls", L"cn_qd01", UID);
-        break;
-    default:
         // server not supported, or wrong UID
         return FALSE;
     }
+    RequestURL.Format(L"/game_record/genshin/api/index?server=%ls&role_id=%ls", ServerName, UID);
     
     const WCHAR *rgpszAcceptTypes[] = { L"*/*", NULL };
 
     HINTERNET hRequest = HttpOpenRequestW(GetmiHoYoServerConnect(), L"GET", RequestURL,
-        NULL, NULL, rgpszAcceptTypes, INTERNET_FLAG_RELOAD | INTERNET_FLAG_NO_COOKIES, NULL);
+        NULL, NULL, rgpszAcceptTypes, INTERNET_FLAG_RELOAD | INTERNET_FLAG_NO_COOKIES | INTERNET_FLAG_SECURE, NULL);
 
     if (!hRequest)
     {
         return FALSE;
     }
     
-    if (!GenshinAPISendRequest(hRequest, Result))
+    if (!GenshinAPISendRequest(hRequest, Result, NULL, NULL))
     {
         InternetCloseHandle(hRequest);
         return FALSE;

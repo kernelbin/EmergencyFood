@@ -8,6 +8,8 @@
 #pragma once
 
 #include <Windows.h>
+#include <atlstr.h>
+
 
 // Elements definition
 
@@ -31,7 +33,7 @@ extern const char *GenshinElementList[];
 typedef struct __GENSHIN_AVATAR_INFO
 {
     int AvatarID;
-    WCHAR *AvatarName_zhCN;
+    const WCHAR *AvatarName_zhCN;
     GENSHIN_ELEMENT AvatarDefaultElement;
 }GENSHIN_AVATAR_INFO;
 
@@ -56,12 +58,45 @@ typedef struct __GENSHIN_AVATAR_DATA
 
 }GENSHIN_AVATAR_DATA;
 
+typedef struct __GENSHIN_WEAPON_DATA
+{
+    ATL::CStringW Name;
+    int Level;
+
+}GENSHIN_WEAPON_DATA;
+
+typedef struct __GENSHIN_RELIQUARY_DATA
+{
+    ATL::CStringW Name;
+    int Pos;
+    int Rarity;
+    int Level;
+
+}GENSHIN_RELIQUARY_DATA;
+
+typedef struct __GENSHIN_AVATAR_DETAILED_DATA :
+    public GENSHIN_AVATAR_DATA
+{
+    GENSHIN_WEAPON_DATA Weapon;
+    GENSHIN_RELIQUARY_DATA Reliquaries[5];
+    BOOL bReliquaryExists[5];
+
+    __GENSHIN_AVATAR_DETAILED_DATA()
+    {
+        for (int i = 0; i < _countof(bReliquaryExists); i++)
+        {
+            bReliquaryExists[i] = FALSE;
+        }
+    }
+}GENSHIN_AVATAR_DETAILED_DATA;
 
 // functions
 #ifdef __cplusplus
 extern "C" GENSHIN_ELEMENT ElementTextToEnum(const char *ElementText);
 extern "C" const WCHAR *GetAvatarNameByID(int ID);
+extern "C" int GetAvatarIDByName(const WCHAR Name[]);
 #else
 GENSHIN_ELEMENT ElementTextToEnum(const char *ElementText);
 const WCHAR *GetAvatarNameByID(int ID);
+int GetAvatarIDByName(const WCHAR Name[]);
 #endif

@@ -71,3 +71,38 @@ BOOL GetTextualizedExplorationInfo(ATL::CAtlArray<GENSHIN_EXPLORATION_DATA> &Exp
     return TRUE;
 }
 
+BOOL GetTextualizedAvatarDetailedInfo(ATL::CAtlArray<GENSHIN_AVATAR_DETAILED_DATA> &AvatarData, ATL::CStringW &Result)
+{
+    Result = L"派蒙查到了！\r\n";
+    for (unsigned int i = 0; i < AvatarData.GetCount(); i++)
+    {
+        const WCHAR *AvatarName = GetAvatarNameByID(AvatarData[i].AvatarID);
+        if (AvatarName)
+        {
+            ATL::CStringW Buffer;
+            Buffer.Format(L"\
+%ls：%d级，好感度%d\r\n\
+武器：%ls，%d级\r\n",
+AvatarName, AvatarData[i].Level, AvatarData[i].Fetter,
+AvatarData[i].Weapon.Name, AvatarData[i].Weapon.Level);
+            Result.Append(Buffer);
+
+            Result.AppendFormat(L"圣遗物：");
+
+            for (int iReliquary = 0; iReliquary < 5; iReliquary++)
+            {
+                if (AvatarData[i].bReliquaryExists[iReliquary])
+                {
+                    Result.AppendFormat(L"\r\n%ls，%d级",
+                        AvatarData[i].Reliquaries[iReliquary].Name, AvatarData[i].Reliquaries[iReliquary].Level);
+                }
+            }
+            if (i != AvatarData.GetCount() - 1)
+            {
+                Result.Append(L"\r\n-------\r\n");
+            }
+        }
+    }
+
+    return TRUE;
+}

@@ -18,6 +18,8 @@ WCHAR miHoYoServer[] = L"api-takumi.mihoyo.com";
 
 HINTERNET hInternet = NULL, hConnect = NULL;
 
+LPCWSTR ServerNameList[10] = { NULL, L"cn_gf01", NULL, NULL, NULL, L"cn_qd01", NULL, NULL, NULL, NULL };
+
 BOOL InitializeGenshinAPI(BOOL bInitialize)
 {
     if (bInitialize)
@@ -31,7 +33,7 @@ BOOL InitializeGenshinAPI(BOOL bInitialize)
         }
 
         hConnect = InternetConnectW(hInternet,
-            miHoYoServer, INTERNET_DEFAULT_HTTP_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
+            miHoYoServer, INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
 
         if (!hConnect)
         {
@@ -56,6 +58,14 @@ BOOL InitializeGenshinAPI(BOOL bInitialize)
 HINTERNET GetmiHoYoServerConnect()
 {
     return hConnect;
+}
+
+const WCHAR *GetServerNameByUID(const WCHAR UID[])
+{
+    if (UID[0] >= L'0' && UID[0] <= L'9')
+    {
+        return ServerNameList[UID[0] - L'0'];
+    }
 }
 
 long long GetPresentUnixTime()
@@ -124,7 +134,7 @@ BOOL GenshinAddAPIHttpHeader(HINTERNET hRequest)
     return TRUE;
 }
 
-BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult)
+BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIResult, LPVOID lpOptional, DWORD dwOptionalLength)
 {
     WCHAR cookie[] = L""; // fill your cookies here
 
@@ -133,7 +143,7 @@ BOOL GenshinAPISendRequest(HINTERNET hRequest, GENSHIN_API_RESULT &GenshinAPIRes
 
     GenshinAddAPIHttpHeader(hRequest);
 
-    BOOL bSuccess = HttpSendRequestW(hRequest, NULL, NULL, NULL, NULL);
+    BOOL bSuccess = HttpSendRequestW(hRequest, NULL, NULL, lpOptional, dwOptionalLength);
 
     if (!bSuccess)
     {

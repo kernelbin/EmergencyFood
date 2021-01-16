@@ -17,3 +17,5 @@ BOOL GetTextualizedStatsInfo(GENSHIN_STATS_DATA &StatsData, ATL::CStringW &Resul
 
 BOOL GetTextualizedExplorationInfo(ATL::CAtlArray<GENSHIN_EXPLORATION_DATA> &ExplorationData, ATL::CStringW &Result);
 
+BOOL GetTextualizedAvatarDetailedInfo(ATL::CAtlArray<GENSHIN_AVATAR_DETAILED_DATA> &AvatarData, ATL::CStringW &Result);
+

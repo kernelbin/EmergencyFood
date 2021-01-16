@@ -152,7 +152,8 @@
     <ClCompile Include="DllMain.c" />
     <ClCompile Include="EncodeConvert.c" />
     <ClCompile Include="GenshinAPIBase.cpp" />
-    <ClCompile Include="GenshinBasic.c" />
+    <ClCompile Include="GenshinAPICharacter.cpp" />
+    <ClCompile Include="GenshinBasic.cpp" />
     <ClCompile Include="GenshinAPIGetGameRecord.cpp" />
     <ClCompile Include="GenshinTextualization.cpp" />
     <ClCompile Include="InteractHandling.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="CQAPITransfer.h" />
     <ClInclude Include="EncodeConvert.h" />
     <ClInclude Include="GenshinAPIBase.h" />
+    <ClInclude Include="GenshinAPICharacter.h" />
     <ClInclude Include="GenshinBasic.h" />
     <ClInclude Include="GenshinAPIGetGameRecord.h" />
     <ClInclude Include="GenshinTextualization.h" />
