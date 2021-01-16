@@ -14,6 +14,10 @@
 #include "EncodeConvert.h"
 
 
+
+int CQAuthCode;
+int CQEnabled;
+
 CQEVENT(const char*, AppInfo, 0)() {
     return CQAPPINFO;
 }

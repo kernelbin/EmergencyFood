@@ -13,3 +13,4 @@ int GetSpacingCharLength(LPCWSTR szMsg);
 
 BOOL IsCallingPrefix(LPCWSTR szMsg, int &PrefixLenght);
 
+int HandlingCommand(MESSAGE_SOURCE MessageSource, LPCWSTR szCommand);
