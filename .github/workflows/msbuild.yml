@@ -30,3 +30,9 @@ jobs:
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: cmd /C "msbuild /m /p:Configuration=Release;Platform=x86 ${{env.SOLUTION_FILE_PATH}}"
+
+    - name: upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+        name: EmergencyFood.dll
+        path: .\EmergencyFood\Release\EmergencyFood.dll
