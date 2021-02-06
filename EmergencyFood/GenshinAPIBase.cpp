@@ -66,6 +66,7 @@ const WCHAR *GetServerNameByUID(const WCHAR UID[])
     {
         return ServerNameList[UID[0] - L'0'];
     }
+    return NULL;
 }
 
 long long GetPresentUnixTime()
