@@ -32,7 +32,7 @@ jobs:
       run: cmd /C "msbuild /m /p:Configuration=Release;Platform=x86 ${{env.SOLUTION_FILE_PATH}}"
 
     - name: upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
+      uses: actions/upload-artifact@v2
+      with:
         name: EmergencyFood.dll
         path: .\EmergencyFood\Release\EmergencyFood.dll
