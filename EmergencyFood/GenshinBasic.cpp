@@ -41,7 +41,8 @@ const GENSHIN_AVATAR_INFO GenshinAvatarInfoList[] =
     {10000041, L"莫娜", ELEMENT_HYDRO},
     {10000042, L"刻晴", ELEMENT_ELECTRO},
     {10000043, L"砂糖", ELEMENT_ANEMO},
-    {10000044, L"辛焱", ELEMENT_PYRO}
+    {10000044, L"辛焱", ELEMENT_PYRO},
+    {10000046, L"胡桃", ELEMENT_PYRO}
 };
 
 
