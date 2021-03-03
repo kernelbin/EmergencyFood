@@ -46,7 +46,7 @@ BOOL IsCallingPrefix(LPCWSTR szMsg, int &PrefixLenght)
     return FALSE;
 }
 
-int HandleGenshinAPIErrorCode(MESSAGE_SOURCE MessageSource, int RetCode)
+int HandleGenshinAPIErrorCode(MESSAGE_SOURCE MessageSource, int RetCode, LPCWSTR Message)
 {
     switch (RetCode)
     {
@@ -62,7 +62,9 @@ int HandleGenshinAPIErrorCode(MESSAGE_SOURCE MessageSource, int RetCode)
     }
     default:
     {
-        SendBackMessage(MessageSource, L"好像哪里出了什么错呢！派蒙也不知道出了什么问题！");
+        ATL::CStringW FmtMessage;
+        FmtMessage.Format(L"好像哪里出了什么错呢！派蒙也不知道出了什么问题... 我找到了这个，上面写着「retcode:%d  %ls」旅行者，你见多识广，看得懂吗？", RetCode, Message);
+        SendBackMessage(MessageSource, FmtMessage);
         break;
     }
     }
@@ -116,7 +118,7 @@ int HandlingCommand(MESSAGE_SOURCE MessageSource, LPCWSTR szCommand)
                     {
                         if (GameRecordResult.RetCode != 0)
                         {
-                            HandleGenshinAPIErrorCode(MessageSource, GameRecordResult.RetCode);
+                            HandleGenshinAPIErrorCode(MessageSource, GameRecordResult.RetCode, GameRecordResult.Message);
                         }
                         else
                         {
@@ -142,7 +144,7 @@ int HandlingCommand(MESSAGE_SOURCE MessageSource, LPCWSTR szCommand)
                     {
                         if (GameRecordResult.RetCode != 0)
                         {
-                            HandleGenshinAPIErrorCode(MessageSource, GameRecordResult.RetCode);
+                            HandleGenshinAPIErrorCode(MessageSource, GameRecordResult.RetCode, GameRecordResult.Message);
                         }
                         else
                         {
@@ -168,7 +170,7 @@ int HandlingCommand(MESSAGE_SOURCE MessageSource, LPCWSTR szCommand)
                     {
                         if (GameRecordResult.RetCode != 0)
                         {
-                            HandleGenshinAPIErrorCode(MessageSource, GameRecordResult.RetCode);
+                            HandleGenshinAPIErrorCode(MessageSource, GameRecordResult.RetCode, GameRecordResult.Message);
                         }
                         else
                         {
@@ -199,7 +201,7 @@ int HandlingCommand(MESSAGE_SOURCE MessageSource, LPCWSTR szCommand)
                         {
                             if (CharacterResult.RetCode != 0)
                             {
-                                HandleGenshinAPIErrorCode(MessageSource, CharacterResult.RetCode);
+                                HandleGenshinAPIErrorCode(MessageSource, CharacterResult.RetCode, CharacterResult.Message);
                             }
                             else
                             {
