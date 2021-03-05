@@ -25,7 +25,8 @@ BOOL InitializeGenshinAPI(BOOL bInitialize)
     if (bInitialize)
     {
         // Initiate WinINet
-        hInternet = InternetOpenW(L"EmergencyFood", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, NULL);
+        hInternet = InternetOpenW(L"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.4.0",
+            INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, NULL);
 
         if (!hInternet)
         {
@@ -96,7 +97,7 @@ BOOL DSGet(ATL::CStringW &DS)
 
     ATL::CStringA Temp;
     long long i = GetPresentUnixTime();
-    Temp.Format("salt=%ls&t=%lld&r=%ls", L"cx2y9z9a29tfqvr1qsq6c7yz99b5jsqt", i, L"aaaaaa");
+    Temp.Format("salt=%ls&t=%lld&r=%ls", L"pbcfcvnfsm5s2w4x3lsq8caor7v8nlqm", i, L"aaaaaa");
 
     uint8_t MD5Result[16];
     md5((const uint8_t *)Temp.GetString(), Temp.GetLength(), MD5Result);
@@ -122,9 +123,9 @@ BOOL GenshinAddAPIHttpHeader(HINTERNET hRequest)
         HTTP_ADDREQ_FLAG_ADD | HTTP_ADDREQ_FLAG_REPLACE);
     HttpAddRequestHeadersW(hRequest, L"Origin: https://webstatic.mihoyo.com", -1,
         HTTP_ADDREQ_FLAG_ADD | HTTP_ADDREQ_FLAG_REPLACE);
-    HttpAddRequestHeadersW(hRequest, L"x-rpc-app_version: 2.2.1\r\n", -1,
+    HttpAddRequestHeadersW(hRequest, L"x-rpc-app_version: 2.4.0\r\n", -1,
         HTTP_ADDREQ_FLAG_ADD | HTTP_ADDREQ_FLAG_REPLACE);
-    HttpAddRequestHeadersW(hRequest, L"x-rpc-client_type: 4\r\n", -1,
+    HttpAddRequestHeadersW(hRequest, L"x-rpc-client_type: 5\r\n", -1,
         HTTP_ADDREQ_FLAG_ADD | HTTP_ADDREQ_FLAG_REPLACE);
     HttpAddRequestHeadersW(hRequest, L"Referer: https://webstatic.mihoyo.com/app/community-game-records/index.html?v=6\r\n", -1,
         HTTP_ADDREQ_FLAG_ADD | HTTP_ADDREQ_FLAG_REPLACE);
